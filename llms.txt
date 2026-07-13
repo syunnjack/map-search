@@ -1,0 +1,38 @@
+# map-search
+
+map-search is a Japanese local map search service. It uses map technology inspired by practical tips about free map APIs, Leaflet, OpenStreetMap, Google Places API, store information, reviews, and map-based application development.
+
+## What The Service Does
+
+- Lets users search nearby stores and facilities on a map.
+- Filters places by category such as cafe, workspace, beauty, clinic, and sightseeing.
+- Shows place cards with rating, area, price range, tags, offers, and calls to action.
+- Sends users to reservation, official search, and Google Maps direction links.
+- Provides a partner listing model for stores and facilities.
+
+## Main Page
+
+- `/`: Interactive local map search page with facility list, filters, keyword search, CTA links, and partner listing information.
+
+## Intended Users
+
+- People looking for nearby cafes, workspaces, salons, clinics, or sightseeing spots.
+- Store owners who want more visits, bookings, calls, and map-based discovery.
+- Site owners who want to monetize local search through listings, coupons, reservations, and MEO support.
+
+## Technical Base
+
+- Leaflet
+- OpenStreetMap tiles
+- Static sample place data
+- Replaceable data layer for Google Places API, official store data, or self-submitted listings
+
+## Cash Points
+
+- Featured listings
+- Coupon placement
+- Reservation links
+- Store page upgrades
+- MEO and Google Business Profile support
+- Review management support
+- Store map implementation consulting

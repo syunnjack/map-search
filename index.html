@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>map-search | 静岡のお店を地図で探す</title>
+    <meta
+      name="description"
+      content="静岡県内の市町村とジャンルを選び、地図上のピンからお店を選べるローカル検索サービス。予約、ルート、周辺情報にも対応。"
+    />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <link rel="canonical" href="https://map-search.example/" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIINfQwNBf5w9gC4PBpY5Jw8HL5hG9EFWqY="
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="map-search | 静岡のお店を地図で探す" />
+    <meta property="og:description" content="静岡県内の市町村とジャンルを選んで、地図ピンからお店を選べるローカル検索サービス。" />
+    <meta property="og:image" content="./assets/hero-map-api.png" />
+  </head>
+  <body>
+    <header class="header">
+      <a class="logo" href="./index.html" aria-label="map-search トップ">
+        <span>MS</span>
+        map-search
+      </a>
+      <nav class="nav" aria-label="主要メニュー">
+        <a href="#map-service">地図検索</a>
+        <a href="#map-service">ルート</a>
+        <a href="#map-service">予約</a>
+        <a href="#map-service">周辺情報</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero local-hero">
+        <div class="hero__copy">
+          <p class="label">SHIZUOKA LOCAL MAP</p>
+          <h1>静岡県のお店を、エリアとジャンルから地図で探す。</h1>
+          <p class="lead">
+            市町村とジャンルを選ぶだけ。気になるお店は地図のピンから選べます。
+            飲食店はホットペッパーの予約ページへ進めます。
+          </p>
+          <div class="actions">
+            <a class="button primary" href="#map-service">地図で探す</a>
+            <button class="button ghost" type="button" data-locate>現在地を表示</button>
+          </div>
+        </div>
+        <img src="./assets/hero-map-api.png" alt="地図上で静岡県内のお店を探すサービス" />
+      </section>
+
+      <section class="strip" aria-label="サービスの特徴">
+        <div><strong>静岡</strong><span>市町村で選べる</span></div>
+        <div><strong>地図</strong><span>ピンから目的地を選択</span></div>
+        <div><strong>予約</strong><span>飲食店は予約ページへ</span></div>
+        <div><strong>現在地</strong><span>近くのお店も確認</span></div>
+      </section>
+
+      <section id="map-service" class="map-service">
+        <div class="map-sidebar">
+          <div class="section-head compact">
+            <p class="label">Search List</p>
+            <h2>条件で一覧を探す</h2>
+            <p class="muted">ここではエリアとジャンルを選び、該当するお店・施設の一覧だけを表示します。</p>
+          </div>
+
+          <div class="control-grid">
+            <div>
+              <label class="search-label" for="prefecture-select">都道府県</label>
+              <select id="prefecture-select" class="search-input" disabled>
+                <option value="shizuoka">静岡県</option>
+              </select>
+            </div>
+            <div>
+              <label class="search-label" for="city-select">市町村</label>
+              <select id="city-select" class="search-input" data-city-select>
+                <option value="all">静岡県全域</option>
+                <option value="静岡市">静岡市</option>
+                <option value="浜松市">浜松市</option>
+                <option value="沼津市">沼津市</option>
+                <option value="熱海市">熱海市</option>
+                <option value="富士市">富士市</option>
+                <option value="伊東市">伊東市</option>
+              </select>
+            </div>
+            <div>
+              <label class="search-label" for="genre-select">店のジャンル</label>
+              <select id="genre-select" class="search-input" data-category-select>
+                <option value="hotpepper">グルメ予約</option>
+                <option value="izakaya">居酒屋</option>
+                <option value="cafe_food">カフェ・スイーツ</option>
+                <option value="yakiniku">焼肉・ホルモン</option>
+                <option value="cafe">カフェ</option>
+                <option value="work">作業場所</option>
+                <option value="beauty">美容</option>
+                <option value="clinic">クリニック</option>
+                <option value="spot">観光</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="search-button" type="button" data-search-places>検索する</button>
+
+          <div class="api-status" data-api-status>
+            市町村とジャンルを選んで検索してください。
+          </div>
+
+          <div class="result-count" data-result-count></div>
+          <div class="place-list" data-place-list></div>
+        </div>
+
+        <div class="map-panel">
+          <div class="route-panel" data-route-panel>
+            <p class="rail-label">Route Map</p>
+            <h2>ピンで目的地を選ぶ</h2>
+            <p>地図のピンを選ぶと、現在地からのルート確認と所要時間の目安を表示します。</p>
+          </div>
+          <div id="map" class="map" aria-label="静岡県内のお店マップ"></div>
+          <div class="map-note">
+            一覧は検索結果の確認用です。ルートと所要時間を見たい場合は、地図上のピンまたは一覧の「ルート確認」を選んでください。
+          </div>
+        </div>
+
+        <aside class="service-rail" aria-label="周辺サービス">
+          <section class="rail-block selected-summary" data-side-selected>
+            <p class="rail-label">Reservation</p>
+            <h2>予約・周辺情報</h2>
+            <p>目的地を選ぶと、予約ページ、駐車場、周辺サービスへのリンクを表示します。ルート確認は地図側で行います。</p>
+          </section>
+
+          <section class="rail-block">
+            <p class="rail-label">Before You Go</p>
+            <div class="rail-actions">
+              <a class="rail-card primary" href="#map-service">
+                <strong>飲食店を予約</strong>
+                <span>エリアとジャンルを選んで予約先を探す</span>
+              </a>
+              <a class="rail-card" href="https://www.google.com/search?q=%E9%9D%99%E5%B2%A1%E7%9C%8C+%E9%A3%B2%E9%A3%9F%E5%BA%97+%E3%82%AF%E3%83%BC%E3%83%9D%E3%83%B3" target="_blank" rel="noopener">
+                <strong>クーポンを探す</strong>
+                <span>来店前に特典を確認</span>
+              </a>
+              <a class="rail-card" href="https://www.google.com/maps/search/%E9%A7%90%E8%BB%8A%E5%A0%B4+%E9%9D%99%E5%B2%A1%E7%9C%8C" target="_blank" rel="noopener">
+                <strong>近くの駐車場</strong>
+                <span>車で行く前に場所を確認</span>
+              </a>
+              <a class="rail-card" href="https://www.google.com/search?q=%E9%9D%99%E5%B2%A1%E7%9C%8C+%E3%83%9B%E3%83%86%E3%83%AB+%E4%BA%88%E7%B4%84" target="_blank" rel="noopener">
+                <strong>近くのホテル</strong>
+                <span>遠方からの利用に</span>
+              </a>
+              <a class="rail-card" href="https://www.google.com/search?q=%E9%9D%99%E5%B2%A1%E7%9C%8C+%E3%82%BF%E3%82%AF%E3%82%B7%E3%83%BC+%E9%85%8D%E8%BB%8A" target="_blank" rel="noopener">
+                <strong>タクシー・移動</strong>
+                <span>飲酒後や雨の日の移動に</span>
+              </a>
+              <a class="rail-card" href="https://www.google.com/search?q=%E9%9D%99%E5%B2%A1%E7%9C%8C+%E7%BE%8E%E5%AE%B9%E3%82%B5%E3%83%AD%E3%83%B3+%E4%BA%88%E7%B4%84" target="_blank" rel="noopener">
+                <strong>美容予約</strong>
+                <span>お出かけ前後の予約に</span>
+              </a>
+            </div>
+          </section>
+
+          <section class="rail-block compact-menu">
+            <p class="rail-label">よく使う検索</p>
+            <a href="https://www.google.com/maps/search/%E3%82%AC%E3%82%BD%E3%83%AA%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%83%89+%E9%9D%99%E5%B2%A1%E7%9C%8C" target="_blank" rel="noopener">ガソリンスタンド</a>
+            <a href="https://www.google.com/maps/search/%E3%82%B3%E3%83%B3%E3%83%93%E3%83%8B+%E9%9D%99%E5%B2%A1%E7%9C%8C" target="_blank" rel="noopener">コンビニ</a>
+            <a href="https://www.google.com/maps/search/%E9%A7%85+%E9%9D%99%E5%B2%A1%E7%9C%8C" target="_blank" rel="noopener">駅</a>
+          </section>
+        </aside>
+      </section>
+
+      <section id="recommend" class="section section-soft">
+        <div class="section-head">
+          <p class="label">How To Use</p>
+          <h2>使い方</h2>
+        </div>
+        <div class="cards four">
+          <article class="card">
+            <span class="num">01</span>
+            <h3>市町村を選ぶ</h3>
+            <p>静岡市、浜松市、沼津市など、探したいエリアを選びます。</p>
+          </article>
+          <article class="card">
+            <span class="num">02</span>
+            <h3>ジャンルを選ぶ</h3>
+            <p>グルメ予約、カフェ、美容、クリニックなどから選びます。</p>
+          </article>
+          <article class="card">
+            <span class="num">03</span>
+            <h3>ピンを選ぶ</h3>
+            <p>地図上のピンをクリックすると、目的地として選択できます。</p>
+          </article>
+          <article class="card">
+            <span class="num">04</span>
+            <h3>予約・道案内へ</h3>
+            <p>ホットペッパー予約、公式情報、Google Mapsの道案内へ進めます。</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="partner" class="section dark">
+        <div class="section-head">
+          <p class="label">For Shops</p>
+          <h2>お店・施設の方へ</h2>
+        </div>
+        <div class="cards four">
+          <article class="card dark-card">
+            <span class="num">Free</span>
+            <h3>基本情報</h3>
+            <p>店名、場所、道案内、公式ページを分かりやすく表示します。</p>
+          </article>
+          <article class="card dark-card">
+            <span class="num">Food</span>
+            <h3>予約ページ</h3>
+            <p>飲食店はホットペッパーの予約ページへ案内できます。</p>
+          </article>
+          <article class="card dark-card">
+            <span class="num">Map</span>
+            <h3>地図から発見</h3>
+            <p>ユーザーがエリアとジャンルで探したときに見つけてもらえます。</p>
+          </article>
+          <article class="card dark-card">
+            <span class="num">Info</span>
+            <h3>情報の整備</h3>
+            <p>営業時間、写真、口コミ、予約リンクを整えることで選ばれやすくなります。</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div>
+        <strong>map-search</strong>
+        <p>静岡県内のお店・施設を地図で探せるローカル検索サービス。</p>
+      </div>
+      <nav aria-label="フッター">
+        <a href="./HOTPEPPER_API.md">API設定</a>
+        <a href="./llms.txt">llms.txt</a>
+      </nav>
+    </footer>
+
+    <div class="modal" data-place-modal hidden>
+      <div class="modal__backdrop" data-close-modal></div>
+      <section class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <button class="modal__close" type="button" data-close-modal aria-label="閉じる">×</button>
+        <div data-modal-content></div>
+      </section>
+    </div>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="./config.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>店舗データ収益化診断 | map-search</title>
+    <meta name="description" content="店舗データ、口コミ、地図API、MEO、予約導線のどこから収益化すべきかを判定する無料診断。" />
+    <link rel="canonical" href="https://map-search.example/tools/diagnosis.html" />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <a class="logo" href="../index.html"><span>MS</span>map-search</a>
+      <nav class="nav" aria-label="主要メニュー">
+        <a href="./diagnosis.html">診断</a>
+        <a href="./api-selector.html">API選定</a>
+        <a href="./map-estimator.html">見積もり</a>
+      </nav>
+    </header>
+    <main>
+      <section class="tool-hero">
+        <p class="label">Lead Magnet</p>
+        <h1>店舗データ収益化診断</h1>
+        <p class="lead">解説を読む前に、どのキャッシュポイントへ進むべきかを判定します。</p>
+      </section>
+      <section class="section tool-grid">
+        <div class="tool-panel">
+          <div class="form-grid">
+            <div>
+              <label for="visitor-type">立場</label>
+              <select id="visitor-type" data-cash-type>
+                <option value="owner">店舗オーナー</option>
+                <option value="creator">Web制作者</option>
+                <option value="developer">開発者</option>
+                <option value="marketer">MEO運用者</option>
+              </select>
+            </div>
+            <div>
+              <label for="main-goal">目的</label>
+              <select id="main-goal" data-cash-goal>
+                <option value="sales">来店・予約を増やしたい</option>
+                <option value="reviews">口コミ管理をしたい</option>
+                <option value="api">APIを選びたい</option>
+                <option value="map">店舗検索マップを作りたい</option>
+              </select>
+            </div>
+            <div>
+              <label for="budget">予算</label>
+              <select id="budget" data-cash-budget>
+                <option value="low">月1万円未満</option>
+                <option value="mid">月1万から5万円</option>
+                <option value="high">月5万円以上</option>
+              </select>
+            </div>
+          </div>
+          <div class="result cash-result" data-cash-result></div>
+        </div>
+        <aside class="tool-panel">
+          <div class="score">無料</div>
+          <h2>診断後の導線</h2>
+          <p class="muted">結果に応じて、MEOツール、口コミ管理、API選定、店舗検索マップ制作へ送客します。</p>
+          <a class="button primary" href="./api-selector.html">API選定も試す</a>
+        </aside>
+      </section>
+    </main>
+    <script src="../script.js"></script>
+  </body>
+</html>

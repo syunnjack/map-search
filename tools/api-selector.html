@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>地図API選定シミュレーター | map-search</title>
+    <meta name="description" content="無料枠、商用利用、口コミ、国内データ、Vue実装の条件から地図API候補を判定するシミュレーター。" />
+    <link rel="canonical" href="https://map-search.example/tools/api-selector.html" />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <a class="logo" href="../index.html"><span>MS</span>map-search</a>
+      <nav class="nav" aria-label="主要メニュー">
+        <a href="./diagnosis.html">診断</a>
+        <a href="./api-selector.html">API選定</a>
+        <a href="./map-estimator.html">見積もり</a>
+      </nav>
+    </header>
+    <main>
+      <section class="tool-hero">
+        <p class="label">API Selector</p>
+        <h1>地図API選定シミュレーター</h1>
+        <p class="lead">「無料で使えるか」ではなく、商用利用・店舗情報・口コミ・実装コストで選びます。</p>
+      </section>
+      <section class="section split">
+        <div class="tool-panel">
+          <h2>おすすめ分類</h2>
+          <p class="muted">このページはAPI解説ではなく、ユーザーを資料請求・実装相談へ進めるための判定ページです。</p>
+          <ul class="asset-list">
+            <li>個人開発: OpenStreetMap / Leaflet</li>
+            <li>店舗情報: Google Places API</li>
+            <li>国内法人: ZENRIN / Mapple</li>
+            <li>海外POI: Foursquare</li>
+          </ul>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>条件</th><th>推奨導線</th><th>収益化</th></tr></thead>
+            <tbody>
+              <tr><td>口コミを扱いたい</td><td>Google Places APIの規約確認</td><td>口コミ管理ツール</td></tr>
+              <tr><td>国内業務利用</td><td>法人地図APIの比較</td><td>資料請求・導入相談</td></tr>
+              <tr><td>低コストで地図表示</td><td>OpenStreetMap + Leaflet</td><td>サーバー・制作相談</td></tr>
+              <tr><td>店舗検索アプリ</td><td>Places API + 独自DB</td><td>API実装代行</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
