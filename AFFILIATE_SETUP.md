@@ -4,7 +4,9 @@
 
 ```js
 window.MAP_SEARCH_CONFIG = {
+  API_PROXY_ENABLED: false,
   API_BASE_URL: "",
+  GOOGLE_PLACES_API_KEY: "",
   HOTPEPPER_API_KEY: "リクルートAPIキー",
   VALUECOMMERCE_SID: "バリューコマースSID",
   VALUECOMMERCE_PID: "バリューコマースPID",
@@ -20,7 +22,21 @@ window.MAP_SEARCH_CONFIG = {
 };
 ```
 
-本番では `API_BASE_URL` に同一ドメインまたはサーバーレスAPIのURLを設定し、APIキーはサーバー側の環境変数に置きます。
+本番では `API_PROXY_ENABLED` を `true` にし、APIキーはサーバー側の環境変数に置きます。
+
+同一ドメインの `/api/...` を使う場合:
+
+```js
+API_PROXY_ENABLED: true,
+API_BASE_URL: "",
+```
+
+別ドメインのAPIへ逃がす場合:
+
+```js
+API_PROXY_ENABLED: true,
+API_BASE_URL: "https://api.example.com",
+```
 
 提携URLには以下の置換タグを使えます。
 
@@ -76,3 +92,15 @@ VALUECOMMERCE_URL_TEMPLATE: "https://example.com/track?u={url}"
 楽天トラベルAPIの公式仕様では、現行版 `20260731` において `applicationId` と `accessKey` が必須で、`affiliateId` は任意です。
 
 `RAKUTEN_TRAVEL_API_VERSION` は通常 `20260731` のままで運用します。
+
+## Google Places API
+
+飲食店以外のカフェ、作業場所、美容、クリニック、観光スポットは、本番では `api/places.js` 経由で Google Places API (New) に接続します。
+
+環境変数:
+
+```text
+GOOGLE_PLACES_API_KEY=
+```
+
+フロント側の `GOOGLE_PLACES_API_KEY` はMVP実験用の予備項目です。本番では空にして、サーバー側だけにキーを置きます。

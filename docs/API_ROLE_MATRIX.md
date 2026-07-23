@@ -27,6 +27,15 @@
 - 表示フィールドはFieldMaskで必要最小限にする。
 - 口コミ本文は扱い方に注意し、過度な再掲載を避ける。
 
+実装:
+
+- サーバー側: `api/places.js`
+- 使用API: Text Search (New)
+- エンドポイント: `POST https://places.googleapis.com/v1/places:searchText`
+- 必須ヘッダー: `X-Goog-Api-Key`, `X-Goog-FieldMask`
+- 現在のFieldMask: `id`, `displayName`, `formattedAddress`, `location`, `rating`, `googleMapsUri`, `primaryTypeDisplayName`, `businessStatus`
+- 参照: https://developers.google.com/maps/documentation/places/web-service/reference/rest/v1/places/searchText
+
 ## Google Business Profile API
 
 使う場面:
@@ -39,6 +48,8 @@
 
 - 権限のない全国店舗データを自由取得するAPIではない。
 - Places APIとは役割を分ける。
+
+MVP段階ではGBPのAPI呼び出しは入れず、提携店舗向けの管理機能として設計する。
 
 ## Hot Pepper API
 

@@ -53,6 +53,26 @@ const hotpepperGenres = {
   yakiniku: "G008",
 };
 
+const genreLabels = {
+  hotpepper: "グルメ予約",
+  izakaya: "居酒屋",
+  cafe_food: "カフェ・スイーツ",
+  yakiniku: "焼肉・ホルモン",
+  cafe: "カフェ",
+  work: "作業場所",
+  beauty: "美容",
+  clinic: "クリニック",
+  spot: "観光",
+};
+
+const googlePlaceTypes = {
+  cafe: "cafe",
+  work: "cafe",
+  beauty: "beauty_salon",
+  clinic: "doctor",
+  spot: "tourist_attraction",
+};
+
 const samplePlaces = [
   {
     id: "shizuoka-izakaya",
@@ -649,11 +669,17 @@ function hotpepperFallbackPlaces() {
 }
 
 function activePlaces() {
-  return isHotpepperCategory(state.category) ? state.places : filteredSamplePlaces();
+  if (isHotpepperCategory(state.category)) return state.places;
+  if (apiProxyEnabled() && state.hasSearched) return state.places;
+  return filteredSamplePlaces();
 }
 
 function apiBaseUrl() {
   return (config.API_BASE_URL || "").replace(/\/$/, "");
+}
+
+function apiProxyEnabled() {
+  return Boolean(config.API_PROXY_ENABLED || apiBaseUrl());
 }
 
 function hotpepperRequestParams(includeKey = true) {
@@ -687,6 +713,23 @@ function hotpepperRequestUrl() {
 function hotpepperProxyUrl() {
   const params = hotpepperRequestParams(false);
   return `${apiBaseUrl()}/api/hotpepper?${params.toString()}`;
+}
+
+function placesProxyUrl() {
+  const center = cities[state.city] || cities.all;
+  const params = new URLSearchParams({
+    prefecture: state.prefecture,
+    city: state.city,
+    keyword: state.city === "all"
+      ? `${currentRegion().name} ${genreLabels[state.category] || state.category}`
+      : `${center.label} ${genreLabels[state.category] || state.category}`,
+    type: googlePlaceTypes[state.category] || "",
+    south: String(currentBounds()[0][0]),
+    west: String(currentBounds()[0][1]),
+    north: String(currentBounds()[1][0]),
+    east: String(currentBounds()[1][1]),
+  });
+  return `${apiBaseUrl()}/api/places?${params.toString()}`;
 }
 
 async function requestJson(url) {
@@ -763,9 +806,60 @@ function shopToPlace(shop) {
   };
 }
 
+function googlePlaceToPlace(place) {
+  const location = place.location || {};
+  const name = place.displayName?.text || place.name || "名称未設定";
+  const mapsUrl = place.googleMapsUri || mapSearchLink(name);
+  return {
+    id: `google-${place.id || encodeURIComponent(name)}`,
+    placeId: place.id || "",
+    name,
+    category: state.category,
+    categoryLabel: place.primaryTypeDisplayName?.text || genreLabels[state.category] || "施設",
+    lat: Number(location.latitude),
+    lng: Number(location.longitude),
+    city: cities[state.city]?.label || currentRegion().name,
+    rating: place.rating || "G",
+    price: "Google掲載情報",
+    tags: [place.formattedAddress || "", place.businessStatus === "OPERATIONAL" ? "営業中の可能性" : ""].filter(Boolean),
+    description: place.formattedAddress || "Google Places APIから取得した施設情報です。",
+    offer: "公式情報を確認",
+    reserveUrl: mapsUrl,
+    siteUrl: mapsUrl,
+    source: "google_places",
+  };
+}
+
+async function loadGooglePlaces() {
+  const status = document.querySelector("[data-api-status]");
+  state.loading = true;
+  state.selectedPlace = null;
+  renderSelectedPlace();
+  if (status) status.textContent = "Google Places APIから候補を取得しています...";
+  render();
+
+  try {
+    const data = await requestJson(placesProxyUrl());
+    const places = data?.places || [];
+    state.places = places.map(googlePlaceToPlace).filter((place) => Number.isFinite(place.lat) && Number.isFinite(place.lng));
+    if (status) {
+      const label = cities[state.city]?.label || currentRegion().name;
+      status.textContent = `${label}周辺の施設を${state.places.length}件表示しています。`;
+    }
+  } catch {
+    state.places = filteredSamplePlaces();
+    if (status) {
+      status.textContent = "Google Places APIの取得に失敗しました。サンプル候補を表示しています。";
+    }
+  } finally {
+    state.loading = false;
+    render();
+  }
+}
+
 async function loadHotpepperPlaces() {
   const status = document.querySelector("[data-api-status]");
-  if (!config.HOTPEPPER_API_KEY && !apiBaseUrl()) {
+  if (!config.HOTPEPPER_API_KEY && !apiProxyEnabled()) {
     state.places = hotpepperFallbackPlaces();
     if (status) {
       status.textContent = "config.js にホットペッパーAPIキーを設定すると、実際の掲載店に切り替わります。現在はサンプル店舗を表示しています。";
@@ -781,7 +875,7 @@ async function loadHotpepperPlaces() {
   render();
 
   try {
-    const data = apiBaseUrl()
+    const data = apiProxyEnabled()
       ? await requestJson(hotpepperProxyUrl())
       : await requestJsonp(hotpepperRequestUrl());
     const shops = data?.results?.shop || [];
@@ -809,7 +903,7 @@ function renderRakutenHotels() {
     box.innerHTML = "";
     return;
   }
-  if (!apiBaseUrl() && (!config.RAKUTEN_APPLICATION_ID || !config.RAKUTEN_ACCESS_KEY)) {
+  if (!apiProxyEnabled() && (!config.RAKUTEN_APPLICATION_ID || !config.RAKUTEN_ACCESS_KEY)) {
     box.innerHTML = `
       <div class="hotel-empty">
         楽天トラベルAPIキーを config.js に設定すると、目的地周辺のホテル候補を表示できます。
@@ -854,7 +948,7 @@ async function loadRakutenHotels(place) {
   state.rakutenLoading = true;
   renderRakutenHotels();
   try {
-    const data = apiBaseUrl()
+    const data = apiProxyEnabled()
       ? await requestJson(`${apiBaseUrl()}/api/rakuten-travel?city=${encodeURIComponent(place.city)}`)
       : await requestJsonp(rakutenHotelRequestUrl(place));
     if (requestId !== state.rakutenRequestId) return;
@@ -1331,6 +1425,7 @@ function searchPlaces() {
   syncRegionState();
   state.hasSearched = true;
   state.selectedPlace = null;
+  state.places = [];
   state.markerSignature = "";
   renderSelectedPlace();
   renderRoutePanel();
@@ -1338,6 +1433,8 @@ function searchPlaces() {
   renderSideSelected();
   if (isHotpepperCategory(state.category)) {
     loadHotpepperPlaces();
+  } else if (apiProxyEnabled()) {
+    loadGooglePlaces();
   } else {
     const status = document.querySelector("[data-api-status]");
     if (status) status.textContent = "市町村とジャンルを選ぶと、地図とリストが切り替わります。";
