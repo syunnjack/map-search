@@ -1,0 +1,65 @@
+{
+  "version": "2026-07-22",
+  "country": "JP",
+  "defaultPrefecture": "shizuoka",
+  "prefectures": [
+    {
+      "id": "shizuoka",
+      "name": "静岡県",
+      "slug": "shizuoka",
+      "center": { "lat": 34.9769, "lng": 138.3831, "zoom": 9 },
+      "bounds": {
+        "south": 34.55,
+        "west": 137.45,
+        "north": 35.65,
+        "east": 139.25
+      },
+      "priority": 1,
+      "municipalities": [
+        { "id": "shizuoka-city", "name": "静岡市", "slug": "shizuoka", "lat": 34.9756, "lng": 138.3828, "zoom": 13 },
+        { "id": "hamamatsu-city", "name": "浜松市", "slug": "hamamatsu", "lat": 34.7108, "lng": 137.7261, "zoom": 13 },
+        { "id": "numazu-city", "name": "沼津市", "slug": "numazu", "lat": 35.0956, "lng": 138.8634, "zoom": 13 },
+        { "id": "atami-city", "name": "熱海市", "slug": "atami", "lat": 35.0969, "lng": 139.0713, "zoom": 13 },
+        { "id": "fuji-city", "name": "富士市", "slug": "fuji", "lat": 35.1614, "lng": 138.6763, "zoom": 13 },
+        { "id": "ito-city", "name": "伊東市", "slug": "ito", "lat": 34.9657, "lng": 139.1019, "zoom": 13 }
+      ]
+    },
+    {
+      "id": "aichi",
+      "name": "愛知県",
+      "slug": "aichi",
+      "center": { "lat": 35.1802, "lng": 136.9066, "zoom": 9 },
+      "bounds": {
+        "south": 34.55,
+        "west": 136.65,
+        "north": 35.45,
+        "east": 137.85
+      },
+      "priority": 2,
+      "municipalities": [
+        { "id": "nagoya-city", "name": "名古屋市", "slug": "nagoya", "lat": 35.1815, "lng": 136.9066, "zoom": 13 },
+        { "id": "toyota-city", "name": "豊田市", "slug": "toyota", "lat": 35.0824, "lng": 137.1563, "zoom": 13 },
+        { "id": "okazaki-city", "name": "岡崎市", "slug": "okazaki", "lat": 34.9548, "lng": 137.1744, "zoom": 13 },
+        { "id": "toyohashi-city", "name": "豊橋市", "slug": "toyohashi", "lat": 34.7692, "lng": 137.3915, "zoom": 13 }
+      ]
+    },
+    {
+      "id": "tokyo",
+      "name": "東京都",
+      "slug": "tokyo",
+      "center": { "lat": 35.6762, "lng": 139.6503, "zoom": 10 },
+      "bounds": {
+        "south": 35.45,
+        "west": 138.85,
+        "north": 35.9,
+        "east": 140.05
+      },
+      "priority": 3,
+      "municipalities": [
+        { "id": "shinjuku", "name": "新宿区", "slug": "shinjuku", "lat": 35.6938, "lng": 139.7034, "zoom": 13 },
+        { "id": "shibuya", "name": "渋谷区", "slug": "shibuya", "lat": 35.6618, "lng": 139.7041, "zoom": 13 },
+        { "id": "taito", "name": "台東区", "slug": "taito", "lat": 35.7126, "lng": 139.78, "zoom": 13 }
+      ]
+    }
+  ]
+}

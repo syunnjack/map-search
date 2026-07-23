@@ -1,0 +1,80 @@
+{
+  "version": "2026-07-22",
+  "genres": [
+    {
+      "id": "hotpepper",
+      "label": "グルメ予約",
+      "slug": "gourmet",
+      "primaryApi": "hotpepper",
+      "placesType": "restaurant",
+      "revenueActions": ["restaurant_reservation", "coupon", "parking", "hotel", "taxi"]
+    },
+    {
+      "id": "izakaya",
+      "label": "居酒屋",
+      "slug": "izakaya",
+      "primaryApi": "hotpepper",
+      "hotpepperGenre": "G001",
+      "placesType": "japanese_restaurant",
+      "revenueActions": ["restaurant_reservation", "coupon", "parking", "hotel", "taxi"]
+    },
+    {
+      "id": "cafe_food",
+      "label": "カフェ・スイーツ",
+      "slug": "cafe-sweets",
+      "primaryApi": "hotpepper",
+      "hotpepperGenre": "G014",
+      "placesType": "cafe",
+      "revenueActions": ["restaurant_reservation", "coupon", "parking", "hotel"]
+    },
+    {
+      "id": "yakiniku",
+      "label": "焼肉・ホルモン",
+      "slug": "yakiniku",
+      "primaryApi": "hotpepper",
+      "hotpepperGenre": "G008",
+      "placesType": "barbecue_restaurant",
+      "revenueActions": ["restaurant_reservation", "coupon", "parking", "hotel", "taxi"]
+    },
+    {
+      "id": "hotel",
+      "label": "ホテル",
+      "slug": "hotel",
+      "primaryApi": "rakuten_travel",
+      "placesType": "hotel",
+      "revenueActions": ["hotel", "parking", "taxi", "rental_car"]
+    },
+    {
+      "id": "parking",
+      "label": "駐車場",
+      "slug": "parking",
+      "primaryApi": "places",
+      "placesType": "parking",
+      "revenueActions": ["parking", "hotel", "taxi"]
+    },
+    {
+      "id": "beauty",
+      "label": "美容",
+      "slug": "beauty",
+      "primaryApi": "places",
+      "placesType": "beauty_salon",
+      "revenueActions": ["beauty", "parking", "hotel"]
+    },
+    {
+      "id": "clinic",
+      "label": "クリニック",
+      "slug": "clinic",
+      "primaryApi": "places",
+      "placesType": "doctor",
+      "revenueActions": ["clinic", "parking", "hotel"]
+    },
+    {
+      "id": "spot",
+      "label": "観光",
+      "slug": "spot",
+      "primaryApi": "places",
+      "placesType": "tourist_attraction",
+      "revenueActions": ["hotel", "parking", "taxi", "rental_car"]
+    }
+  ]
+}

@@ -297,6 +297,7 @@ function hotelUrl(place) {
 }
 
 function rakutenHotelRequestUrl(place) {
+  const version = config.RAKUTEN_TRAVEL_API_VERSION || "20260731";
   const params = new URLSearchParams({
     applicationId: config.RAKUTEN_APPLICATION_ID,
     accessKey: config.RAKUTEN_ACCESS_KEY,
@@ -311,7 +312,7 @@ function rakutenHotelRequestUrl(place) {
   if (config.RAKUTEN_AFFILIATE_ID) {
     params.set("affiliateId", config.RAKUTEN_AFFILIATE_ID);
   }
-  return `https://openapi.rakuten.co.jp/engine/api/Travel/KeywordHotelSearch/20170426?${params.toString()}`;
+  return `https://openapi.rakuten.co.jp/engine/api/Travel/KeywordHotelSearch/${version}?${params.toString()}`;
 }
 
 function hotelBasicInfo(rawHotel) {

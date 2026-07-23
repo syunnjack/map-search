@@ -8,6 +8,7 @@ window.MAP_SEARCH_CONFIG = {
   VALUECOMMERCE_SID: "バリューコマースSID",
   VALUECOMMERCE_PID: "バリューコマースPID",
   VALUECOMMERCE_URL_TEMPLATE: "",
+  RAKUTEN_TRAVEL_API_VERSION: "20260731",
   RAKUTEN_APPLICATION_ID: "楽天アプリID",
   RAKUTEN_ACCESS_KEY: "楽天アクセスキー",
   RAKUTEN_AFFILIATE_ID: "楽天アフィリエイトID",
@@ -42,4 +43,6 @@ HOTEL_AFFILIATE_URL: "https://example.com/hotel?area={city}&keyword={name}"
 
 `RAKUTEN_AFFILIATE_ID` を設定すると、楽天APIの返却URLがアフィリエイトURLになります。
 
-楽天トラベルAPIの公式仕様では、`applicationId` と `accessKey` が必須で、`affiliateId` は任意です。
+楽天トラベルAPIの公式仕様では、現行版 `20260731` において `applicationId` と `accessKey` が必須で、`affiliateId` は任意です。
+
+`RAKUTEN_TRAVEL_API_VERSION` は通常 `20260731` のままで運用します。
