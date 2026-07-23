@@ -107,6 +107,7 @@ const samplePlaces = [
     description: "静岡駅から歩きやすい、海鮮と地酒を楽しめる居酒屋。",
     offer: "席のみ予約あり",
     reserveUrl: "#partner",
+    detailUrl: "./place/partner-shizuoka-kaisen-sakaba/",
     siteUrl: "https://www.google.com/search?q=静岡駅+居酒屋",
     source: "sample",
   },
@@ -311,6 +312,7 @@ const samplePlaces = [
     description: "名古屋駅周辺で名物料理とお酒を楽しめる、出張や観光でも使いやすい居酒屋。",
     offer: "名古屋めしコースあり",
     reserveUrl: "#partner",
+    detailUrl: "./place/partner-nagoya-tebasaki-sakaba/",
     siteUrl: "https://www.google.com/search?q=名古屋駅+居酒屋",
     source: "sample",
   },
@@ -396,6 +398,7 @@ const samplePlaces = [
     description: "新宿駅周辺で飲み会や仕事帰りに使いやすい居酒屋。",
     offer: "飲み放題プランあり",
     reserveUrl: "#partner",
+    detailUrl: "./place/partner-shinjuku-izakaya/",
     siteUrl: "https://www.google.com/search?q=新宿駅+居酒屋",
     source: "sample",
   },
@@ -1050,6 +1053,9 @@ function placeRow(place) {
   const image = place.image ? `<img class="place-thumb" src="${place.image}" alt="${place.name}の写真" loading="lazy" />` : "";
   const reserveLabel = place.source === "hotpepper" ? "予約する" : "予約・公式";
   const selectedClass = state.selectedPlace?.id === place.id ? " selected" : "";
+  const detailAction = place.detailUrl
+    ? `<a class="mini-button" href="${place.detailUrl}" data-track="place_detail_click" data-place-id="${place.id}" data-category="${place.category}">詳細</a>`
+    : `<button class="mini-button" type="button" data-open-place="${place.id}">詳細</button>`;
   return `
     <article class="place-row${selectedClass}" data-place-id="${place.id}">
       ${image}
@@ -1068,8 +1074,8 @@ function placeRow(place) {
       </div>
       <div class="place-actions">
         <button class="mini-button primary" type="button" data-select-place="${place.id}">ルート確認</button>
-        <button class="mini-button" type="button" data-open-place="${place.id}">詳細</button>
-        <a class="mini-button accent" href="${place.reserveUrl}" target="${place.reserveUrl.startsWith("#") ? "_self" : "_blank"}" rel="noopener">${reserveLabel}</a>
+        ${detailAction}
+        <a class="mini-button accent" href="${place.reserveUrl}" target="${place.reserveUrl.startsWith("#") ? "_self" : "_blank"}" rel="noopener" data-track="reservation_click" data-place-id="${place.id}" data-category="${place.category}">${reserveLabel}</a>
       </div>
     </article>
   `;
@@ -1283,7 +1289,7 @@ function renderRoutePanel() {
     ${estimateHtml}
     <div class="route-actions">
       <button class="mini-button" type="button" data-locate>現在地を表示</button>
-      <a class="mini-button primary" href="${directionsUrl(place)}" target="_blank" rel="noopener">Google Mapsで開く</a>
+      <a class="mini-button primary" href="${directionsUrl(place)}" target="_blank" rel="noopener" data-track="route_click" data-place-id="${place.id}" data-category="${place.category}">Google Mapsで開く</a>
     </div>
   `;
 }
@@ -1305,32 +1311,33 @@ function renderSideSelected() {
   const couponLabel = place.source === "hotpepper" ? "クーポンを見る" : "特典・公式情報を見る";
   const relatedLabel = place.category === "beauty" ? "美容予約を探す" : "近くの予約先を探す";
   const relatedUrl = place.category === "beauty" ? beautyUrl(place) : searchLink(`${place.city} ${place.categoryLabel} 予約`);
+  const detailUrl = place.detailUrl || place.siteUrl || place.reserveUrl;
   box.innerHTML = `
     <p class="rail-label">Reservation</p>
     <h2>${place.name}</h2>
     <p>${place.city} / ${place.categoryLabel}</p>
     <div class="rail-actions">
-      <a class="rail-card primary" href="${place.reserveUrl}" target="${place.reserveUrl.startsWith("#") ? "_self" : "_blank"}" rel="noopener">
+      <a class="rail-card primary" href="${place.reserveUrl}" target="${place.reserveUrl.startsWith("#") ? "_self" : "_blank"}" rel="noopener" data-track="reservation_click" data-place-id="${place.id}" data-category="${place.category}">
         <strong>${reserveLabel}</strong>
         <span>${place.offer}</span>
       </a>
-      <a class="rail-card" href="${place.siteUrl || place.reserveUrl}" target="${(place.siteUrl || place.reserveUrl).startsWith("#") ? "_self" : "_blank"}" rel="noopener">
+      <a class="rail-card" href="${detailUrl}" target="${detailUrl.startsWith("#") || place.detailUrl ? "_self" : "_blank"}" rel="noopener" data-track="place_detail_click" data-place-id="${place.id}" data-category="${place.category}">
         <strong>${couponLabel}</strong>
         <span>店舗ページで特典・空席・詳細を確認</span>
       </a>
-      <a class="rail-card" href="${parkingUrl(place)}" target="_blank" rel="noopener">
+      <a class="rail-card" href="${parkingUrl(place)}" target="_blank" rel="noopener" data-track="parking_click" data-place-id="${place.id}" data-category="${place.category}">
         <strong>近くの駐車場</strong>
         <span>車で行く前に空き・場所を確認</span>
       </a>
-      <a class="rail-card" href="${hotelUrl(place)}" target="_blank" rel="noopener">
+      <a class="rail-card" href="${hotelUrl(place)}" target="_blank" rel="noopener" data-track="hotel_click" data-place-id="${place.id}" data-category="${place.category}">
         <strong>近くのホテル</strong>
         <span>楽天トラベルで宿泊先を探す</span>
       </a>
-      <a class="rail-card" href="${taxiUrl(place)}" target="_blank" rel="noopener">
+      <a class="rail-card" href="${taxiUrl(place)}" target="_blank" rel="noopener" data-track="taxi_click" data-place-id="${place.id}" data-category="${place.category}">
         <strong>タクシー・移動</strong>
         <span>飲酒後や雨の日の移動に</span>
       </a>
-      <a class="rail-card" href="${relatedUrl}" target="_blank" rel="noopener">
+      <a class="rail-card" href="${relatedUrl}" target="_blank" rel="noopener" data-track="related_search_click" data-place-id="${place.id}" data-category="${place.category}">
         <strong>${relatedLabel}</strong>
         <span>同じエリアで比較して選ぶ</span>
       </a>
@@ -1360,7 +1367,7 @@ function renderSelectedPlace() {
     <h3>${place.name}</h3>
     <p>${place.city} / ${place.categoryLabel}</p>
     <div class="place-actions">
-      <a class="mini-button primary" href="${directionsUrl(place)}" target="_blank" rel="noopener">現在地から道案内</a>
+      <a class="mini-button primary" href="${directionsUrl(place)}" target="_blank" rel="noopener" data-track="route_click" data-place-id="${place.id}" data-category="${place.category}">現在地から道案内</a>
       <a class="mini-button primary" href="${place.reserveUrl}" target="${place.reserveUrl.startsWith("#") ? "_self" : "_blank"}" rel="noopener">${reserveLabel}</a>
       <button class="mini-button" type="button" data-open-selected>詳細</button>
     </div>
@@ -1385,6 +1392,9 @@ function openPlaceModal(place) {
   const tags = place.tags.map((tag) => `<span>${tag}</span>`).join("");
   const image = place.image ? `<img class="modal-image" src="${place.image}" alt="${place.name}の写真" />` : "";
   const reserveLabel = place.source === "hotpepper" ? "ホットペッパーで予約する" : "予約情報を見る";
+  const detailLink = place.detailUrl
+    ? `<a class="button secondary-light" href="${place.detailUrl}" data-track="place_detail_click" data-place-id="${place.id}" data-category="${place.category}">詳細ページ</a>`
+    : "";
   const detailRows = [
     place.access ? `<p><strong>アクセス</strong><br>${place.access}</p>` : "",
     place.open ? `<p><strong>営業時間</strong><br>${place.open}</p>` : "",
@@ -1405,8 +1415,9 @@ function openPlaceModal(place) {
     <div class="modal-extra">${detailRows}</div>
     <div class="modal-actions">
       <button class="button secondary-light" type="button" data-modal-select="${place.id}">目的地にする</button>
-      <a class="button primary" href="${place.reserveUrl}" target="${place.reserveUrl.startsWith("#") ? "_self" : "_blank"}" rel="noopener">${reserveLabel}</a>
-      <a class="button secondary-light" href="${directionsUrl(place)}" target="_blank" rel="noopener">道案内を開く</a>
+      ${detailLink}
+      <a class="button primary" href="${place.reserveUrl}" target="${place.reserveUrl.startsWith("#") ? "_self" : "_blank"}" rel="noopener" data-track="reservation_click" data-place-id="${place.id}" data-category="${place.category}">${reserveLabel}</a>
+      <a class="button secondary-light" href="${directionsUrl(place)}" target="_blank" rel="noopener" data-track="route_click" data-place-id="${place.id}" data-category="${place.category}">道案内を開く</a>
     </div>
     <p class="modal-note">${place.source === "hotpepper" ? "店舗情報はホットペッパー グルメAPIから取得しています。" : "この店舗情報はMVP用のサンプルです。"}</p>
   `;

@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "generate:areas": "node scripts/generate-area-pages.js",
-    "validate": "node --check script.js && node --check api/hotpepper.js && node --check api/rakuten-travel.js && node --check api/places.js && node --check scripts/generate-area-pages.js && node --check scripts/validate-site.js && node -e \"JSON.parse(require('fs').readFileSync('data/region-schema.json','utf8')); JSON.parse(require('fs').readFileSync('data/genre-schema.json','utf8'));\" && node scripts/validate-site.js",
-    "build": "npm run generate:areas && npm run validate"
+    "generate:places": "node scripts/generate-place-pages.js",
+    "generate": "npm run generate:areas && npm run generate:places",
+    "validate": "node --check script.js && node --check analytics.js && node --check place-detail.js && node --check api/hotpepper.js && node --check api/rakuten-travel.js && node --check api/places.js && node --check scripts/generate-area-pages.js && node --check scripts/generate-place-pages.js && node --check scripts/validate-site.js && node -e \"JSON.parse(require('fs').readFileSync('data/region-schema.json','utf8')); JSON.parse(require('fs').readFileSync('data/genre-schema.json','utf8')); JSON.parse(require('fs').readFileSync('data/place-schema.json','utf8')); JSON.parse(require('fs').readFileSync('data/places/featured.json','utf8'));\" && node scripts/validate-site.js",
+    "build": "npm run generate && npm run validate"
   }
 }

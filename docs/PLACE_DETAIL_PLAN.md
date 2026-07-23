@@ -44,8 +44,22 @@
 
 ## Implementation Order
 
-1. Places API検索結果に `placeId` を保持する。
-2. `data/places/*.json` に提携またはキャッシュ対象の店舗を保存する。
-3. `scripts/generate-place-pages.js` を追加する。
-4. `/place/{id}/index.html` を生成する。
-5. 検索結果の詳細ボタンを詳細ページへつなぐ。
+1. Done: Places API検索結果に `placeId` を保持する。
+2. Done: `data/places/*.json` に提携またはキャッシュ対象の店舗を保存する。
+3. Done: `scripts/generate-place-pages.js` を追加する。
+4. Done: `/place/{id}/index.html` を生成する。
+5. Done: 検索結果の詳細ボタンを詳細ページへつなぐ。
+
+## Current MVP
+
+- `data/places/featured.json` を掲載候補データの入口にする。
+- `npm run build` でエリアページと店舗詳細ページを生成する。
+- 生成済みの店舗は検索結果の「詳細」から `/place/{id}/` に遷移する。
+- 未生成のAPI取得店舗は従来どおり画面内の詳細表示を使う。
+
+## Next
+
+1. ホットペッパーAPIの店舗IDを `data/places/*.json` に保存する管理フローを作る。
+2. 楽天トラベルAPIの周辺ホテルを店舗詳細ページに動的表示する。
+3. Google Placesの `placeId` を詳細ページURL候補として保持する。
+4. 予約成果、ホテル成果、周辺サービスクリックを計測イベントとして分ける。

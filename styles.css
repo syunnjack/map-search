@@ -979,6 +979,47 @@ td:first-child { color: var(--ink); font-weight: 900; }
   max-width: 980px;
   font-size: clamp(34px, 5vw, 64px);
 }
+.place-detail-hero .tag-row {
+  margin-top: 18px;
+}
+.content-section {
+  padding: clamp(34px, 6vw, 72px) clamp(18px, 4vw, 56px);
+}
+.content-section > h2,
+.split-section h2 {
+  margin-top: 0;
+  font-size: clamp(24px, 3vw, 38px);
+}
+.split-section {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+.split-section > div {
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  box-shadow: var(--shadow);
+}
+.info-list {
+  display: grid;
+  gap: 12px;
+  margin: 20px 0;
+}
+.info-list p {
+  margin: 0;
+  color: var(--muted);
+}
+.info-list strong {
+  color: var(--ink);
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
 .article-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 300px;
@@ -1086,9 +1127,9 @@ select {
 }
 
 @media (max-width: 960px) {
-  .hero, .split, .article-layout { grid-template-columns: 1fr; }
+  .hero, .split, .article-layout, .split-section { grid-template-columns: 1fr; }
   .hero { background: var(--dark); }
-  .cards.three, .cards.four, .article-grid, .asset-list, .strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cards.three, .cards.four, .article-grid, .asset-list, .strip, .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .form-grid, .tool-grid, .control-grid { grid-template-columns: 1fr; }
   .map-service { grid-template-columns: 1fr; }
   .map-sidebar { max-height: none; border-right: 0; }
@@ -1103,7 +1144,7 @@ select {
   .nav { width: 100%; overflow-x: auto; padding-bottom: 3px; }
   .hero { min-height: auto; }
   .hero img { min-height: 280px; }
-  .cards.three, .cards.four, .article-grid, .asset-list, .strip { grid-template-columns: 1fr; }
+  .cards.three, .cards.four, .article-grid, .asset-list, .strip, .card-grid { grid-template-columns: 1fr; }
   .strip { margin-top: 18px; }
   .map-sidebar { padding: 18px; }
   .place-row { grid-template-columns: 1fr; }
