@@ -4,56 +4,37 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>静岡県のお店・施設を地図で探す | map-search</title>
-    <meta name="description" content="静岡市、浜松市、沼津市、熱海市、富士市、伊東市のお店・施設をエリアとジャンルから探せる地図検索ページ。" />
+    <meta name="description" content="静岡県の市区町村とジャンルから、お店・施設・予約先・周辺サービスを地図で探せます。" />
     <link rel="canonical" href="https://map-search.example/shizuoka/" />
     <link rel="stylesheet" href="../styles.css" />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        "name": "静岡県のお店・施設を地図で探す",
-        "description": "静岡県内のお店・施設を市町村とジャンルから地図で探せるページです。",
-        "about": { "@type": "Place", "name": "静岡県" }
-      }
-    </script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"静岡県のお店・施設を地図で探す","about":{"@type":"Place","name":"静岡県"}}</script>
   </head>
   <body>
     <header class="header">
       <a class="logo" href="../index.html"><span>MS</span>map-search</a>
       <nav class="nav" aria-label="主要メニュー">
-        <a href="../index.html?prefecture=shizuoka#map-service">地図で探す</a>
+        <a href="../index.html#map-service">地図で探す</a>
+        <a href="../shizuoka/">静岡県</a>
         <a href="../aichi/">愛知県</a>
+        <a href="../tokyo/">東京都</a>
       </nav>
     </header>
     <main>
       <section class="article-hero">
-        <p class="label">Shizuoka Map Search</p>
+        <p class="label">静岡県 Map Search</p>
         <h1>静岡県のお店・施設を地図で探す</h1>
-        <p class="lead">市町村とジャンルを選んで、一覧と地図のピンから目的地を見つけられます。</p>
-        <div class="actions">
-          <a class="button primary" href="../index.html?prefecture=shizuoka#map-service">静岡県で探す</a>
-        </div>
+        <p class="lead">市区町村とジャンルを選んで、一覧と地図のピンから目的地を見つけられます。</p>
       </section>
+      
       <section class="section">
-        <div class="section-head">
-          <p class="label">Genre Shortcuts</p>
-          <h2>ジャンルから探す</h2>
-        </div>
-        <div class="cards four">
-          <article class="card"><span class="num">予約</span><h3>居酒屋</h3><p>静岡県内の居酒屋を一覧と地図で探します。</p><a class="button secondary-light" href="../index.html?prefecture=shizuoka&genre=izakaya#map-service">居酒屋を探す</a></article>
-          <article class="card"><span class="num">食事</span><h3>カフェ・スイーツ</h3><p>休憩やランチに使いやすいお店を探します。</p><a class="button secondary-light" href="../index.html?prefecture=shizuoka&genre=cafe_food#map-service">カフェを探す</a></article>
-          <article class="card"><span class="num">宿泊</span><h3>ホテル</h3><p>目的地周辺の宿泊候補へ進みます。</p><a class="button secondary-light" href="../index.html?prefecture=shizuoka&genre=spot#map-service">宿泊起点を探す</a></article>
-          <article class="card"><span class="num">移動</span><h3>観光スポット</h3><p>観光地からルート、ホテル、駐車場へ進めます。</p><a class="button secondary-light" href="../index.html?prefecture=shizuoka&genre=spot#map-service">観光で探す</a></article>
-        </div>
+        <div class="section-head"><p class="label">Genre Shortcuts</p><h2>ジャンルから探す</h2></div>
+        <div class="cards four"><article class="card"><span class="num">居酒</span><h3>居酒屋</h3><p>静岡県の居酒屋を一覧と地図で探します。</p><a class="button secondary-light" href="../index.html?prefecture=shizuoka&amp;genre=izakaya#map-service">地図で探す</a></article><article class="card"><span class="num">カフ</span><h3>カフェ・スイーツ</h3><p>静岡県のカフェ・スイーツを一覧と地図で探します。</p><a class="button secondary-light" href="../index.html?prefecture=shizuoka&amp;genre=cafe_food#map-service">地図で探す</a></article><article class="card"><span class="num">焼肉</span><h3>焼肉・ホルモン</h3><p>静岡県の焼肉・ホルモンを一覧と地図で探します。</p><a class="button secondary-light" href="../index.html?prefecture=shizuoka&amp;genre=yakiniku#map-service">地図で探す</a></article><article class="card"><span class="num">ホテ</span><h3>ホテル</h3><p>静岡県のホテルを一覧と地図で探します。</p><a class="button secondary-light" href="../index.html?prefecture=shizuoka&amp;genre=hotel#map-service">地図で探す</a></article><article class="card"><span class="num">駐車</span><h3>駐車場</h3><p>静岡県の駐車場を一覧と地図で探します。</p><a class="button secondary-light" href="../index.html?prefecture=shizuoka&amp;genre=parking#map-service">地図で探す</a></article><article class="card"><span class="num">美容</span><h3>美容</h3><p>静岡県の美容を一覧と地図で探します。</p><a class="button secondary-light" href="../index.html?prefecture=shizuoka&amp;genre=beauty#map-service">地図で探す</a></article><article class="card"><span class="num">クリ</span><h3>クリニック</h3><p>静岡県のクリニックを一覧と地図で探します。</p><a class="button secondary-light" href="../index.html?prefecture=shizuoka&amp;genre=clinic#map-service">地図で探す</a></article><article class="card"><span class="num">観光</span><h3>観光</h3><p>静岡県の観光を一覧と地図で探します。</p><a class="button secondary-light" href="../index.html?prefecture=shizuoka&amp;genre=spot#map-service">地図で探す</a></article></div>
       </section>
       <section class="section section-soft">
-        <div class="cards four">
-          <article class="card"><span class="num">静岡</span><h3>静岡市</h3><p>駅周辺、駿府城公園周辺、中心街のお店を探せます。</p></article>
-          <article class="card"><span class="num">浜松</span><h3>浜松市</h3><p>浜松駅周辺の飲食店、焼肉、観光前後の目的地探しに向いています。</p></article>
-          <article class="card"><span class="num">沼津</span><h3>沼津市</h3><p>沼津港周辺の海鮮、ランチ、観光ルートに使えます。</p></article>
-          <article class="card"><span class="num">熱海</span><h3>熱海市</h3><p>温泉街、宿泊、観光と合わせたお店探しに使えます。</p></article>
-        </div>
+        <div class="section-head"><p class="label">Areas</p><h2>市区町村から探す</h2></div>
+        <div class="cards four"><article class="card"><span class="num">静岡</span><h3>静岡市</h3><p>静岡市の飲食店、施設、宿泊、移動先を地図から探せます。</p><a class="button secondary-light" href="./shizuoka/">地図で探す</a></article><article class="card"><span class="num">浜松</span><h3>浜松市</h3><p>浜松市の飲食店、施設、宿泊、移動先を地図から探せます。</p><a class="button secondary-light" href="./hamamatsu/">地図で探す</a></article><article class="card"><span class="num">沼津</span><h3>沼津市</h3><p>沼津市の飲食店、施設、宿泊、移動先を地図から探せます。</p><a class="button secondary-light" href="./numazu/">地図で探す</a></article><article class="card"><span class="num">熱海</span><h3>熱海市</h3><p>熱海市の飲食店、施設、宿泊、移動先を地図から探せます。</p><a class="button secondary-light" href="./atami/">地図で探す</a></article><article class="card"><span class="num">富士</span><h3>富士市</h3><p>富士市の飲食店、施設、宿泊、移動先を地図から探せます。</p><a class="button secondary-light" href="./fuji/">地図で探す</a></article><article class="card"><span class="num">伊東</span><h3>伊東市</h3><p>伊東市の飲食店、施設、宿泊、移動先を地図から探せます。</p><a class="button secondary-light" href="./ito/">地図で探す</a></article></div>
       </section>
+    
     </main>
   </body>
 </html>

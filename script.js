@@ -35,13 +35,28 @@ const regions = {
       "豊橋市": { lat: 34.7692, lng: 137.3915, zoom: 13, label: "豊橋市" },
     },
   },
+  tokyo: {
+    name: "東京都",
+    shortName: "東京",
+    hotpepperLargeArea: "Z011",
+    bounds: [
+      [35.45, 138.85],
+      [35.9, 140.05],
+    ],
+    cities: {
+      all: { lat: 35.6762, lng: 139.6503, zoom: 10, label: "東京都全域" },
+      "新宿区": { lat: 35.6938, lng: 139.7034, zoom: 13, label: "新宿区" },
+      "渋谷区": { lat: 35.6618, lng: 139.7041, zoom: 13, label: "渋谷区" },
+      "台東区": { lat: 35.7126, lng: 139.78, zoom: 13, label: "台東区" },
+    },
+  },
 };
 
 const initialParams = new URLSearchParams(window.location.search);
 const initialPrefecture = regions[initialParams.get("prefecture")] ? initialParams.get("prefecture") : "shizuoka";
 const initialCity = initialParams.get("city") || "all";
 const requestedCategory = initialParams.get("genre") || "hotpepper";
-const initialCategory = ["hotpepper", "izakaya", "cafe_food", "yakiniku", "cafe", "work", "beauty", "clinic", "spot"].includes(requestedCategory)
+const initialCategory = ["hotpepper", "izakaya", "cafe_food", "yakiniku", "hotel", "parking", "cafe", "work", "beauty", "clinic", "spot"].includes(requestedCategory)
   ? requestedCategory
   : "hotpepper";
 let cities = regions[initialPrefecture].cities;
@@ -58,6 +73,8 @@ const genreLabels = {
   izakaya: "居酒屋",
   cafe_food: "カフェ・スイーツ",
   yakiniku: "焼肉・ホルモン",
+  hotel: "ホテル",
+  parking: "駐車場",
   cafe: "カフェ",
   work: "作業場所",
   beauty: "美容",
@@ -67,6 +84,8 @@ const genreLabels = {
 
 const googlePlaceTypes = {
   cafe: "cafe",
+  hotel: "hotel",
+  parking: "parking",
   work: "cafe",
   beauty: "beauty_salon",
   clinic: "doctor",
@@ -363,6 +382,57 @@ const samplePlaces = [
     siteUrl: "https://www.google.com/search?q=豊橋駅+コワーキング",
     source: "sample",
   },
+  {
+    id: "shinjuku-izakaya",
+    name: "新宿駅前 居酒屋横丁",
+    category: "izakaya",
+    categoryLabel: "居酒屋",
+    lat: 35.6932,
+    lng: 139.7005,
+    city: "新宿区",
+    rating: 4.1,
+    price: "3,000-4,800円",
+    tags: ["新宿駅", "個室", "飲み放題", "予約"],
+    description: "新宿駅周辺で飲み会や仕事帰りに使いやすい居酒屋。",
+    offer: "飲み放題プランあり",
+    reserveUrl: "#partner",
+    siteUrl: "https://www.google.com/search?q=新宿駅+居酒屋",
+    source: "sample",
+  },
+  {
+    id: "shibuya-cafe",
+    name: "渋谷駅前 カフェラウンジ",
+    category: "cafe_food",
+    categoryLabel: "カフェ・食事",
+    lat: 35.6595,
+    lng: 139.7005,
+    city: "渋谷区",
+    rating: 4.0,
+    price: "900-1,900円",
+    tags: ["渋谷駅", "待ち合わせ", "ランチ", "電源"],
+    description: "渋谷駅周辺で待ち合わせや軽食に使いやすいカフェ。",
+    offer: "ランチ利用におすすめ",
+    reserveUrl: "#partner",
+    siteUrl: "https://www.google.com/search?q=渋谷駅+カフェ",
+    source: "sample",
+  },
+  {
+    id: "taito-spot",
+    name: "浅草観光スポット案内",
+    category: "spot",
+    categoryLabel: "観光",
+    lat: 35.7148,
+    lng: 139.7967,
+    city: "台東区",
+    rating: 4.3,
+    price: "観光検索",
+    tags: ["浅草", "観光", "ホテル検索", "駐車場"],
+    description: "浅草周辺の観光、宿泊、移動を探す起点として使えるエリア案内。",
+    offer: "周辺ホテル検索へ",
+    reserveUrl: "https://www.google.com/search?q=浅草+ホテル+予約",
+    siteUrl: "https://www.google.com/search?q=浅草+ホテル+予約",
+    source: "sample",
+  },
 ];
 
 const state = {
@@ -593,6 +663,8 @@ function categoryColor(category) {
     izakaya: "#d95c22",
     cafe_food: "#0b7c61",
     yakiniku: "#b27420",
+    hotel: "#5367c7",
+    parking: "#1d7897",
     cafe: "#0b7c61",
     work: "#1d7897",
     beauty: "#c15a8a",

@@ -15,6 +15,8 @@ map-search is a Japanese local map search service. It uses map technology inspir
 - `/`: Interactive local map search page with facility list, filters, keyword search, CTA links, and partner listing information.
 - `/shizuoka/`: Shizuoka area entry page for city and genre based map search.
 - `/aichi/`: Aichi area entry page for city and genre based map search.
+- `/tokyo/`: Tokyo area entry page for city and genre based map search.
+- `/{prefecture}/{municipality}/{genre}/`: Static SEO/AIO/LLMO entry pages that open the interactive map search with preselected area and genre.
 
 ## Intended Users
 

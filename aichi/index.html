@@ -4,56 +4,37 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>愛知県のお店・施設を地図で探す | map-search</title>
-    <meta name="description" content="名古屋市、豊田市、岡崎市、豊橋市のお店・施設をエリアとジャンルから探せる地図検索ページ。" />
+    <meta name="description" content="愛知県の市区町村とジャンルから、お店・施設・予約先・周辺サービスを地図で探せます。" />
     <link rel="canonical" href="https://map-search.example/aichi/" />
     <link rel="stylesheet" href="../styles.css" />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        "name": "愛知県のお店・施設を地図で探す",
-        "description": "愛知県内のお店・施設を市町村とジャンルから地図で探せるページです。",
-        "about": { "@type": "Place", "name": "愛知県" }
-      }
-    </script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"愛知県のお店・施設を地図で探す","about":{"@type":"Place","name":"愛知県"}}</script>
   </head>
   <body>
     <header class="header">
       <a class="logo" href="../index.html"><span>MS</span>map-search</a>
       <nav class="nav" aria-label="主要メニュー">
-        <a href="../index.html?prefecture=aichi#map-service">地図で探す</a>
+        <a href="../index.html#map-service">地図で探す</a>
         <a href="../shizuoka/">静岡県</a>
+        <a href="../aichi/">愛知県</a>
+        <a href="../tokyo/">東京都</a>
       </nav>
     </header>
     <main>
       <section class="article-hero">
-        <p class="label">Aichi Map Search</p>
+        <p class="label">愛知県 Map Search</p>
         <h1>愛知県のお店・施設を地図で探す</h1>
-        <p class="lead">名古屋、豊田、岡崎、豊橋の目的地を一覧と地図のピンから選べます。</p>
-        <div class="actions">
-          <a class="button primary" href="../index.html?prefecture=aichi#map-service">愛知県で探す</a>
-        </div>
+        <p class="lead">市区町村とジャンルを選んで、一覧と地図のピンから目的地を見つけられます。</p>
       </section>
+      
       <section class="section">
-        <div class="section-head">
-          <p class="label">Genre Shortcuts</p>
-          <h2>ジャンルから探す</h2>
-        </div>
-        <div class="cards four">
-          <article class="card"><span class="num">予約</span><h3>居酒屋</h3><p>愛知県内の居酒屋を一覧と地図で探します。</p><a class="button secondary-light" href="../index.html?prefecture=aichi&genre=izakaya#map-service">居酒屋を探す</a></article>
-          <article class="card"><span class="num">食事</span><h3>カフェ・スイーツ</h3><p>名古屋や栄周辺の休憩先を探します。</p><a class="button secondary-light" href="../index.html?prefecture=aichi&genre=cafe_food#map-service">カフェを探す</a></article>
-          <article class="card"><span class="num">会食</span><h3>焼肉</h3><p>豊田や名古屋周辺の焼肉店を探します。</p><a class="button secondary-light" href="../index.html?prefecture=aichi&genre=yakiniku#map-service">焼肉を探す</a></article>
-          <article class="card"><span class="num">移動</span><h3>観光スポット</h3><p>観光地からホテル、駐車場、移動先へ進めます。</p><a class="button secondary-light" href="../index.html?prefecture=aichi&genre=spot#map-service">観光で探す</a></article>
-        </div>
+        <div class="section-head"><p class="label">Genre Shortcuts</p><h2>ジャンルから探す</h2></div>
+        <div class="cards four"><article class="card"><span class="num">居酒</span><h3>居酒屋</h3><p>愛知県の居酒屋を一覧と地図で探します。</p><a class="button secondary-light" href="../index.html?prefecture=aichi&amp;genre=izakaya#map-service">地図で探す</a></article><article class="card"><span class="num">カフ</span><h3>カフェ・スイーツ</h3><p>愛知県のカフェ・スイーツを一覧と地図で探します。</p><a class="button secondary-light" href="../index.html?prefecture=aichi&amp;genre=cafe_food#map-service">地図で探す</a></article><article class="card"><span class="num">焼肉</span><h3>焼肉・ホルモン</h3><p>愛知県の焼肉・ホルモンを一覧と地図で探します。</p><a class="button secondary-light" href="../index.html?prefecture=aichi&amp;genre=yakiniku#map-service">地図で探す</a></article><article class="card"><span class="num">ホテ</span><h3>ホテル</h3><p>愛知県のホテルを一覧と地図で探します。</p><a class="button secondary-light" href="../index.html?prefecture=aichi&amp;genre=hotel#map-service">地図で探す</a></article><article class="card"><span class="num">駐車</span><h3>駐車場</h3><p>愛知県の駐車場を一覧と地図で探します。</p><a class="button secondary-light" href="../index.html?prefecture=aichi&amp;genre=parking#map-service">地図で探す</a></article><article class="card"><span class="num">美容</span><h3>美容</h3><p>愛知県の美容を一覧と地図で探します。</p><a class="button secondary-light" href="../index.html?prefecture=aichi&amp;genre=beauty#map-service">地図で探す</a></article><article class="card"><span class="num">クリ</span><h3>クリニック</h3><p>愛知県のクリニックを一覧と地図で探します。</p><a class="button secondary-light" href="../index.html?prefecture=aichi&amp;genre=clinic#map-service">地図で探す</a></article><article class="card"><span class="num">観光</span><h3>観光</h3><p>愛知県の観光を一覧と地図で探します。</p><a class="button secondary-light" href="../index.html?prefecture=aichi&amp;genre=spot#map-service">地図で探す</a></article></div>
       </section>
       <section class="section section-soft">
-        <div class="cards four">
-          <article class="card"><span class="num">名古屋</span><h3>名古屋市</h3><p>名古屋駅、栄周辺の飲食店、カフェ、宿泊候補探しに使えます。</p></article>
-          <article class="card"><span class="num">豊田</span><h3>豊田市</h3><p>駅周辺の飲食店や車移動前提の目的地探しに向いています。</p></article>
-          <article class="card"><span class="num">岡崎</span><h3>岡崎市</h3><p>観光、飲食、宿泊を合わせて探したいときに使えます。</p></article>
-          <article class="card"><span class="num">豊橋</span><h3>豊橋市</h3><p>駅周辺の作業場所、飲食店、移動前後の目的地探しに使えます。</p></article>
-        </div>
+        <div class="section-head"><p class="label">Areas</p><h2>市区町村から探す</h2></div>
+        <div class="cards four"><article class="card"><span class="num">名古屋</span><h3>名古屋市</h3><p>名古屋市の飲食店、施設、宿泊、移動先を地図から探せます。</p><a class="button secondary-light" href="./nagoya/">地図で探す</a></article><article class="card"><span class="num">豊田</span><h3>豊田市</h3><p>豊田市の飲食店、施設、宿泊、移動先を地図から探せます。</p><a class="button secondary-light" href="./toyota/">地図で探す</a></article><article class="card"><span class="num">岡崎</span><h3>岡崎市</h3><p>岡崎市の飲食店、施設、宿泊、移動先を地図から探せます。</p><a class="button secondary-light" href="./okazaki/">地図で探す</a></article><article class="card"><span class="num">豊橋</span><h3>豊橋市</h3><p>豊橋市の飲食店、施設、宿泊、移動先を地図から探せます。</p><a class="button secondary-light" href="./toyohashi/">地図で探す</a></article></div>
       </section>
+    
     </main>
   </body>
 </html>
