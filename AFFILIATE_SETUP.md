@@ -4,6 +4,7 @@
 
 ```js
 window.MAP_SEARCH_CONFIG = {
+  API_BASE_URL: "",
   HOTPEPPER_API_KEY: "リクルートAPIキー",
   VALUECOMMERCE_SID: "バリューコマースSID",
   VALUECOMMERCE_PID: "バリューコマースPID",
@@ -18,6 +19,8 @@ window.MAP_SEARCH_CONFIG = {
   BEAUTY_AFFILIATE_URL: "美容予約の提携URL",
 };
 ```
+
+本番では `API_BASE_URL` に同一ドメインまたはサーバーレスAPIのURLを設定し、APIキーはサーバー側の環境変数に置きます。
 
 提携URLには以下の置換タグを使えます。
 
@@ -39,7 +42,7 @@ HOTEL_AFFILIATE_URL: "https://example.com/hotel?area={city}&keyword={name}"
 
 ホテル予約は楽天トラベルキーワード検索APIに対応しています。
 
-`RAKUTEN_APPLICATION_ID` と `RAKUTEN_ACCESS_KEY` を設定すると、目的地を選んだ後の右側パネルに楽天トラベルのホテル候補が表示されます。
+`API_BASE_URL` を使わないMVP確認では、`RAKUTEN_APPLICATION_ID` と `RAKUTEN_ACCESS_KEY` を設定すると、目的地を選んだ後の右側パネルに楽天トラベルのホテル候補が表示されます。
 
 `RAKUTEN_AFFILIATE_ID` を設定すると、楽天APIの返却URLがアフィリエイトURLになります。
 

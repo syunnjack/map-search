@@ -1,19 +1,50 @@
 const config = window.MAP_SEARCH_CONFIG || {};
 
-const shizuokaBounds = [
-  [34.55, 137.45],
-  [35.65, 139.25],
-];
-
-const cities = {
-  all: { lat: 34.9769, lng: 138.3831, zoom: 9, label: "静岡県全域" },
-  "静岡市": { lat: 34.9756, lng: 138.3828, zoom: 13, label: "静岡市" },
-  "浜松市": { lat: 34.7108, lng: 137.7261, zoom: 13, label: "浜松市" },
-  "沼津市": { lat: 35.0956, lng: 138.8634, zoom: 13, label: "沼津市" },
-  "熱海市": { lat: 35.0969, lng: 139.0713, zoom: 13, label: "熱海市" },
-  "富士市": { lat: 35.1614, lng: 138.6763, zoom: 13, label: "富士市" },
-  "伊東市": { lat: 34.9657, lng: 139.1019, zoom: 13, label: "伊東市" },
+const regions = {
+  shizuoka: {
+    name: "静岡県",
+    shortName: "静岡",
+    hotpepperLargeArea: "Z032",
+    bounds: [
+      [34.55, 137.45],
+      [35.65, 139.25],
+    ],
+    cities: {
+      all: { lat: 34.9769, lng: 138.3831, zoom: 9, label: "静岡県全域" },
+      "静岡市": { lat: 34.9756, lng: 138.3828, zoom: 13, label: "静岡市" },
+      "浜松市": { lat: 34.7108, lng: 137.7261, zoom: 13, label: "浜松市" },
+      "沼津市": { lat: 35.0956, lng: 138.8634, zoom: 13, label: "沼津市" },
+      "熱海市": { lat: 35.0969, lng: 139.0713, zoom: 13, label: "熱海市" },
+      "富士市": { lat: 35.1614, lng: 138.6763, zoom: 13, label: "富士市" },
+      "伊東市": { lat: 34.9657, lng: 139.1019, zoom: 13, label: "伊東市" },
+    },
+  },
+  aichi: {
+    name: "愛知県",
+    shortName: "愛知",
+    hotpepperLargeArea: "Z033",
+    bounds: [
+      [34.55, 136.65],
+      [35.45, 137.85],
+    ],
+    cities: {
+      all: { lat: 35.1802, lng: 136.9066, zoom: 9, label: "愛知県全域" },
+      "名古屋市": { lat: 35.1815, lng: 136.9066, zoom: 13, label: "名古屋市" },
+      "豊田市": { lat: 35.0824, lng: 137.1563, zoom: 13, label: "豊田市" },
+      "岡崎市": { lat: 34.9548, lng: 137.1744, zoom: 13, label: "岡崎市" },
+      "豊橋市": { lat: 34.7692, lng: 137.3915, zoom: 13, label: "豊橋市" },
+    },
+  },
 };
+
+const initialParams = new URLSearchParams(window.location.search);
+const initialPrefecture = regions[initialParams.get("prefecture")] ? initialParams.get("prefecture") : "shizuoka";
+const initialCity = initialParams.get("city") || "all";
+const requestedCategory = initialParams.get("genre") || "hotpepper";
+const initialCategory = ["hotpepper", "izakaya", "cafe_food", "yakiniku", "cafe", "work", "beauty", "clinic", "spot"].includes(requestedCategory)
+  ? requestedCategory
+  : "hotpepper";
+let cities = regions[initialPrefecture].cities;
 
 const hotpepperGenres = {
   hotpepper: "",
@@ -227,11 +258,97 @@ const samplePlaces = [
     siteUrl: "https://www.google.com/search?q=伊東市+リラクゼーション",
     source: "sample",
   },
+  {
+    id: "nagoya-izakaya",
+    name: "名古屋駅前 手羽先酒場",
+    category: "izakaya",
+    categoryLabel: "居酒屋",
+    lat: 35.171,
+    lng: 136.884,
+    city: "名古屋市",
+    rating: 4.2,
+    price: "3,000-4,500円",
+    tags: ["名古屋駅", "手羽先", "味噌串", "ネット予約"],
+    description: "名古屋駅周辺で名物料理とお酒を楽しめる、出張や観光でも使いやすい居酒屋。",
+    offer: "名古屋めしコースあり",
+    reserveUrl: "#partner",
+    siteUrl: "https://www.google.com/search?q=名古屋駅+居酒屋",
+    source: "sample",
+  },
+  {
+    id: "nagoya-cafe",
+    name: "栄モーニングカフェ",
+    category: "cafe_food",
+    categoryLabel: "カフェ・食事",
+    lat: 35.1687,
+    lng: 136.9067,
+    city: "名古屋市",
+    rating: 4.1,
+    price: "800-1,600円",
+    tags: ["栄", "モーニング", "ランチ", "駅近"],
+    description: "栄周辺で朝食や待ち合わせに使いやすいカフェ。",
+    offer: "モーニングあり",
+    reserveUrl: "#partner",
+    siteUrl: "https://www.google.com/search?q=栄+カフェ+モーニング",
+    source: "sample",
+  },
+  {
+    id: "toyota-yakiniku",
+    name: "豊田駅前 焼肉ダイニング",
+    category: "yakiniku",
+    categoryLabel: "焼肉",
+    lat: 35.087,
+    lng: 137.156,
+    city: "豊田市",
+    rating: 4.3,
+    price: "4,000-6,000円",
+    tags: ["豊田市駅", "個室", "会食", "駐車場"],
+    description: "豊田市駅周辺で会食や家族利用に使いやすい焼肉店。",
+    offer: "個室コースあり",
+    reserveUrl: "#partner",
+    siteUrl: "https://www.google.com/search?q=豊田市+焼肉",
+    source: "sample",
+  },
+  {
+    id: "okazaki-spot",
+    name: "岡崎城周辺 観光案内",
+    category: "spot",
+    categoryLabel: "観光",
+    lat: 34.9569,
+    lng: 137.1589,
+    city: "岡崎市",
+    rating: 4.0,
+    price: "観光検索",
+    tags: ["岡崎城", "観光", "散策", "ホテル検索"],
+    description: "岡崎城周辺の観光と宿泊先を探す起点として使えるエリア案内。",
+    offer: "周辺ホテル検索へ",
+    reserveUrl: "https://www.google.com/search?q=岡崎城+ホテル+予約",
+    siteUrl: "https://www.google.com/search?q=岡崎城+ホテル+予約",
+    source: "sample",
+  },
+  {
+    id: "toyohashi-work",
+    name: "豊橋駅前ワークスペース",
+    category: "work",
+    categoryLabel: "作業場所",
+    lat: 34.7636,
+    lng: 137.3824,
+    city: "豊橋市",
+    rating: 4.0,
+    price: "700円/時〜",
+    tags: ["豊橋駅", "Wi-Fi", "電源", "会議"],
+    description: "豊橋駅周辺で短時間作業や打ち合わせに使いやすいワークスペース。",
+    offer: "ドロップイン可",
+    reserveUrl: "#partner",
+    siteUrl: "https://www.google.com/search?q=豊橋駅+コワーキング",
+    source: "sample",
+  },
 ];
 
 const state = {
-  city: "all",
-  category: "hotpepper",
+  prefecture: initialPrefecture,
+  city: initialCity,
+  category: initialCategory,
   places: [],
   loading: false,
   hasSearched: false,
@@ -247,6 +364,59 @@ const state = {
   rakutenLoading: false,
   rakutenRequestId: 0,
 };
+
+function currentRegion() {
+  return regions[state.prefecture] || regions.shizuoka;
+}
+
+function currentBounds() {
+  return currentRegion().bounds;
+}
+
+function currentCityEntries() {
+  return Object.entries(currentRegion().cities).filter(([key]) => key !== "all");
+}
+
+function cityBelongsToCurrentRegion(place) {
+  if (state.city !== "all") return place.city === state.city;
+  return currentCityEntries().some(([, city]) => city.label === place.city);
+}
+
+function syncRegionState() {
+  cities = currentRegion().cities;
+  if (!cities[state.city]) state.city = "all";
+}
+
+function renderRegionControls() {
+  syncRegionState();
+  const region = currentRegion();
+  const prefectureSelect = document.querySelector("[data-prefecture-select]");
+  const citySelect = document.querySelector("[data-city-select]");
+  const categorySelect = document.querySelector("[data-category-select]");
+  if (prefectureSelect) {
+    prefectureSelect.innerHTML = Object.entries(regions)
+      .map(([id, item]) => `<option value="${id}">${item.name}</option>`)
+      .join("");
+    prefectureSelect.value = state.prefecture;
+  }
+  if (citySelect) {
+    citySelect.innerHTML = Object.entries(cities)
+      .map(([id, city]) => `<option value="${id}">${city.label}</option>`)
+      .join("");
+    citySelect.value = state.city;
+  }
+  if (categorySelect) categorySelect.value = state.category;
+  document.querySelectorAll("[data-prefecture-name]").forEach((node) => {
+    node.textContent = region.name;
+  });
+  document.querySelectorAll("[data-prefecture-short]").forEach((node) => {
+    node.textContent = region.shortName;
+  });
+  const examples = currentCityEntries().slice(0, 3).map(([, city]) => city.label).join("、");
+  document.querySelectorAll("[data-municipality-examples]").forEach((node) => {
+    node.textContent = examples;
+  });
+}
 
 function isHotpepperCategory(category) {
   return Object.prototype.hasOwnProperty.call(hotpepperGenres, category);
@@ -412,7 +582,7 @@ function formatMinutes(minutes) {
 
 function filteredSamplePlaces() {
   return samplePlaces.filter((place) => {
-    const cityMatch = state.city === "all" || place.city === state.city;
+    const cityMatch = cityBelongsToCurrentRegion(place);
     const categoryMatch = state.category === "all" || place.category === state.category;
     return cityMatch && categoryMatch;
   });
@@ -423,7 +593,7 @@ function hotpepperFallbackPlaces() {
     ? ["izakaya", "yakiniku", "cafe_food", "cafe"]
     : [state.category];
   return samplePlaces.filter((place) => {
-    const cityMatch = state.city === "all" || place.city === state.city;
+    const cityMatch = cityBelongsToCurrentRegion(place);
     const categoryMatch = fallbackCategories.includes(place.category);
     return cityMatch && categoryMatch;
   });
@@ -433,17 +603,21 @@ function activePlaces() {
   return isHotpepperCategory(state.category) ? state.places : filteredSamplePlaces();
 }
 
-function hotpepperRequestUrl() {
+function apiBaseUrl() {
+  return (config.API_BASE_URL || "").replace(/\/$/, "");
+}
+
+function hotpepperRequestParams(includeKey = true) {
   const center = cities[state.city] || cities.all;
   const params = new URLSearchParams({
-    key: config.HOTPEPPER_API_KEY,
     order: "4",
     count: "40",
     format: "json",
   });
+  if (includeKey) params.set("key", config.HOTPEPPER_API_KEY);
 
   if (state.city === "all") {
-    params.set("large_area", "Z032");
+    params.set("large_area", currentRegion().hotpepperLargeArea);
   } else {
     params.set("lat", String(center.lat));
     params.set("lng", String(center.lng));
@@ -453,7 +627,23 @@ function hotpepperRequestUrl() {
 
   const genre = hotpepperGenres[state.category];
   if (genre) params.set("genre", genre);
+  return params;
+}
+
+function hotpepperRequestUrl() {
+  const params = hotpepperRequestParams(true);
   return `https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?${params.toString()}`;
+}
+
+function hotpepperProxyUrl() {
+  const params = hotpepperRequestParams(false);
+  return `${apiBaseUrl()}/api/hotpepper?${params.toString()}`;
+}
+
+async function requestJson(url) {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`API request failed: ${response.status}`);
+  return response.json();
 }
 
 function requestJsonp(url) {
@@ -491,7 +681,7 @@ function shopToPlace(shop) {
   const shopUrl = shop.urls?.pc || shop.coupon_urls?.pc || "";
   const photo = shop.photo?.pc?.m || shop.photo?.pc?.l || shop.logo_image || "";
   const genreName = shop.genre?.name || "グルメ";
-  const cityName = shop.small_area?.name || shop.middle_area?.name || shop.station_name || cities[state.city]?.label || "静岡県";
+  const cityName = shop.small_area?.name || shop.middle_area?.name || shop.station_name || cities[state.city]?.label || currentRegion().name;
   const tags = [
     shop.station_name ? `${shop.station_name}駅` : "",
     shop.budget?.average || "",
@@ -526,7 +716,7 @@ function shopToPlace(shop) {
 
 async function loadHotpepperPlaces() {
   const status = document.querySelector("[data-api-status]");
-  if (!config.HOTPEPPER_API_KEY) {
+  if (!config.HOTPEPPER_API_KEY && !apiBaseUrl()) {
     state.places = hotpepperFallbackPlaces();
     if (status) {
       status.textContent = "config.js にホットペッパーAPIキーを設定すると、実際の掲載店に切り替わります。現在はサンプル店舗を表示しています。";
@@ -542,11 +732,13 @@ async function loadHotpepperPlaces() {
   render();
 
   try {
-    const data = await requestJsonp(hotpepperRequestUrl());
+    const data = apiBaseUrl()
+      ? await requestJson(hotpepperProxyUrl())
+      : await requestJsonp(hotpepperRequestUrl());
     const shops = data?.results?.shop || [];
     state.places = shops.map(shopToPlace).filter((place) => Number.isFinite(place.lat) && Number.isFinite(place.lng));
     if (status) {
-      const label = cities[state.city]?.label || "静岡県";
+      const label = cities[state.city]?.label || currentRegion().name;
       status.textContent = `${label}周辺のホットペッパー掲載店を${state.places.length}件表示しています。`;
     }
   } catch {
@@ -568,7 +760,7 @@ function renderRakutenHotels() {
     box.innerHTML = "";
     return;
   }
-  if (!config.RAKUTEN_APPLICATION_ID || !config.RAKUTEN_ACCESS_KEY) {
+  if (!apiBaseUrl() && (!config.RAKUTEN_APPLICATION_ID || !config.RAKUTEN_ACCESS_KEY)) {
     box.innerHTML = `
       <div class="hotel-empty">
         楽天トラベルAPIキーを config.js に設定すると、目的地周辺のホテル候補を表示できます。
@@ -613,7 +805,9 @@ async function loadRakutenHotels(place) {
   state.rakutenLoading = true;
   renderRakutenHotels();
   try {
-    const data = await requestJsonp(rakutenHotelRequestUrl(place));
+    const data = apiBaseUrl()
+      ? await requestJson(`${apiBaseUrl()}/api/rakuten-travel?city=${encodeURIComponent(place.city)}`)
+      : await requestJsonp(rakutenHotelRequestUrl(place));
     if (requestId !== state.rakutenRequestId) return;
     const hotels = Array.isArray(data?.hotels) ? data.hotels : [];
     state.rakutenHotels = hotels.map(rakutenHotelToCard).filter(Boolean);
@@ -713,10 +907,11 @@ function renderList(items) {
 }
 
 function fallbackPoint(place) {
-  const south = shizuokaBounds[0][0];
-  const west = shizuokaBounds[0][1];
-  const north = shizuokaBounds[1][0];
-  const east = shizuokaBounds[1][1];
+  const bounds = currentBounds();
+  const south = bounds[0][0];
+  const west = bounds[0][1];
+  const north = bounds[1][0];
+  const east = bounds[1][1];
   const x = ((place.lng - west) / (east - west)) * 100;
   const y = ((north - place.lat) / (north - south)) * 100;
   return {
@@ -749,12 +944,11 @@ function renderFallbackMap(items) {
 
   mapElement.innerHTML = `
     <div class="fallback-map__base">
-      <span class="fallback-city city-shizuoka">静岡</span>
-      <span class="fallback-city city-hamamatsu">浜松</span>
-      <span class="fallback-city city-numazu">沼津</span>
-      <span class="fallback-city city-atami">熱海</span>
-      <span class="fallback-city city-fuji">富士</span>
-      <span class="fallback-water">駿河湾</span>
+      ${currentCityEntries().slice(0, 5).map(([, city]) => {
+        const point = fallbackPoint(city);
+        return `<span class="fallback-city" style="left:${point.x}%; top:${point.y}%;">${city.label.replace(/市$|区$/, "")}</span>`;
+      }).join("")}
+      <span class="fallback-water">${currentRegion().shortName}周辺</span>
       ${pins || `<div class="fallback-empty">条件に合う地点がありません。</div>`}
     </div>
   `;
@@ -786,7 +980,7 @@ function renderMarkers(items) {
 
   if (bounds.length) {
     if (state.city === "all") {
-      state.map.fitBounds(shizuokaBounds, { padding: [18, 18], maxZoom: 10, animate: false });
+      state.map.fitBounds(currentBounds(), { padding: [18, 18], maxZoom: 10, animate: false });
     } else {
       state.map.fitBounds(bounds, { padding: [28, 28], maxZoom: 14, animate: false });
     }
@@ -1064,7 +1258,7 @@ function ensureMap() {
   state.map = L.map("map", {
     scrollWheelZoom: true,
     zoomControl: true,
-    maxBounds: shizuokaBounds,
+    maxBounds: currentBounds(),
     maxBoundsViscosity: 0.55,
   }).setView([cities.all.lat, cities.all.lng], cities.all.zoom, { animate: false });
 
@@ -1085,6 +1279,7 @@ function ensureMap() {
 }
 
 function searchPlaces() {
+  syncRegionState();
   state.hasSearched = true;
   state.selectedPlace = null;
   state.markerSignature = "";
@@ -1110,6 +1305,27 @@ document.querySelector("[data-category-select]")?.addEventListener("change", (ev
   renderSideSelected();
   const status = document.querySelector("[data-api-status]");
   if (status) status.textContent = "条件を選んだら「検索する」を押してください。";
+});
+
+document.querySelector("[data-prefecture-select]")?.addEventListener("change", (event) => {
+  state.prefecture = event.target.value;
+  state.city = "all";
+  state.selectedPlace = null;
+  state.places = [];
+  state.markerSignature = "";
+  syncRegionState();
+  renderRegionControls();
+  if (state.map) {
+    state.map.setMaxBounds(currentBounds());
+    state.map.fitBounds(currentBounds(), { padding: [18, 18], maxZoom: 10, animate: false });
+  }
+  renderSelectedPlace();
+  renderRoutePanel();
+  renderRouteLine();
+  renderSideSelected();
+  render();
+  const status = document.querySelector("[data-api-status]");
+  if (status) status.textContent = "都道府県と条件を選んだら「検索する」を押してください。";
 });
 
 document.querySelector("[data-city-select]")?.addEventListener("change", (event) => {
@@ -1172,6 +1388,7 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") closePlaceModal();
 });
 
+renderRegionControls();
 renderList([]);
 renderRoutePanel();
 renderSideSelected();

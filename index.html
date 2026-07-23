@@ -40,7 +40,7 @@
       <section class="hero local-hero">
         <div class="hero__copy">
           <p class="label">SHIZUOKA LOCAL MAP</p>
-          <h1>静岡県のお店を、エリアとジャンルから地図で探す。</h1>
+          <h1><span data-prefecture-name>静岡県</span>のお店を、エリアとジャンルから地図で探す。</h1>
           <p class="lead">
             市町村とジャンルを選ぶだけ。気になるお店は地図のピンから選べます。
             飲食店はホットペッパーの予約ページへ進めます。
@@ -54,7 +54,7 @@
       </section>
 
       <section class="strip" aria-label="サービスの特徴">
-        <div><strong>静岡</strong><span>市町村で選べる</span></div>
+        <div><strong data-prefecture-short>静岡</strong><span>市町村で選べる</span></div>
         <div><strong>地図</strong><span>ピンから目的地を選択</span></div>
         <div><strong>予約</strong><span>飲食店は予約ページへ</span></div>
         <div><strong>現在地</strong><span>近くのお店も確認</span></div>
@@ -71,8 +71,9 @@
           <div class="control-grid">
             <div>
               <label class="search-label" for="prefecture-select">都道府県</label>
-              <select id="prefecture-select" class="search-input" disabled>
+              <select id="prefecture-select" class="search-input" data-prefecture-select>
                 <option value="shizuoka">静岡県</option>
+                <option value="aichi">愛知県</option>
               </select>
             </div>
             <div>
@@ -119,7 +120,7 @@
             <h2>ピンで目的地を選ぶ</h2>
             <p>地図のピンを選ぶと、現在地からのルート確認と所要時間の目安を表示します。</p>
           </div>
-          <div id="map" class="map" aria-label="静岡県内のお店マップ"></div>
+          <div id="map" class="map" aria-label="選択した都道府県内のお店マップ"></div>
           <div class="map-note">
             一覧は検索結果の確認用です。ルートと所要時間を見たい場合は、地図上のピンまたは一覧の「ルート確認」を選んでください。
           </div>
@@ -180,7 +181,7 @@
           <article class="card">
             <span class="num">01</span>
             <h3>市町村を選ぶ</h3>
-            <p>静岡市、浜松市、沼津市など、探したいエリアを選びます。</p>
+        <p><span data-municipality-examples>静岡市、浜松市、沼津市</span>など、探したいエリアを選びます。</p>
           </article>
           <article class="card">
             <span class="num">02</span>
@@ -233,7 +234,7 @@
     <footer class="footer">
       <div>
         <strong>map-search</strong>
-        <p>静岡県内のお店・施設を地図で探せるローカル検索サービス。</p>
+        <p><span data-prefecture-name>静岡県</span>内のお店・施設を地図で探せるローカル検索サービス。</p>
       </div>
       <nav aria-label="フッター">
         <a href="./HOTPEPPER_API.md">API設定</a>
