@@ -104,3 +104,11 @@ GOOGLE_PLACES_API_KEY=
 ```
 
 フロント側の `GOOGLE_PLACES_API_KEY` はMVP実験用の予備項目です。本番では空にして、サーバー側だけにキーを置きます。
+
+## 公開用設定
+
+公開時は `config.production.js` を `config.js` にコピーすると、APIキーをフロントに置かない設定へ切り替わります。
+
+```powershell
+Copy-Item .\config.production.js .\config.js -Force
+```

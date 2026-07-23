@@ -1,0 +1,37 @@
+{
+  "version": "2026-07-23",
+  "fields": {
+    "id": "Internal stable ID",
+    "placeId": "Google Places ID or external provider ID",
+    "provider": "google_places | hotpepper | rakuten_travel | partner",
+    "name": "Display name",
+    "prefecture": "Prefecture ID",
+    "municipality": "Municipality name",
+    "genre": "Genre ID",
+    "lat": "Latitude",
+    "lng": "Longitude",
+    "address": "Formatted address",
+    "rating": "Provider rating",
+    "sourceUrl": "Provider or official URL",
+    "reservationUrl": "Affiliate or reservation URL",
+    "updatedAt": "ISO date"
+  },
+  "examples": [
+    {
+      "id": "google-ChIJ-example",
+      "placeId": "ChIJ-example",
+      "provider": "google_places",
+      "name": "サンプル店舗",
+      "prefecture": "shizuoka",
+      "municipality": "静岡市",
+      "genre": "izakaya",
+      "lat": 34.9756,
+      "lng": 138.3828,
+      "address": "静岡県静岡市",
+      "rating": 4.2,
+      "sourceUrl": "https://www.google.com/maps",
+      "reservationUrl": "",
+      "updatedAt": "2026-07-23"
+    }
+  ]
+}

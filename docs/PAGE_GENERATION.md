@@ -8,6 +8,12 @@
 node scripts/generate-area-pages.js
 ```
 
+検証までまとめて実行する場合:
+
+```powershell
+npm run build
+```
+
 ## Generated Pages
 
 現在のデータでは以下を生成する。
@@ -38,3 +44,12 @@ index.html?prefecture=aichi&city=名古屋市&genre=izakaya#map-service
 ## Next Improvement
 
 次の段階では `script.js` の `regions` もJSONから読み込む構成へ寄せる。そうすると、都道府県追加時の二重管理を減らせる。
+
+## Validation
+
+`scripts/validate-site.js` は以下を確認する。
+
+- 生成HTMLの検索画面ハンドオフURLに不正な都道府県がない
+- 不正な市区町村がない
+- 不正なジャンルがない
+- `sitemap.xml` に生成対象URLが入っている
