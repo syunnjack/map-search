@@ -38,6 +38,33 @@ HOTEL_AFFILIATE_URL: "https://example.com/hotel?area={city}&keyword={name}"
 
 未設定の場合は、通常のGoogle検索やGoogle Maps検索にフォールバックします。
 
+## 収益リンクの接続場所
+
+目的地を選んだ後の右側パネルには、以下の順番でリンクが出ます。
+
+| 表示 | 設定キー | 主な用途 |
+| --- | --- | --- |
+| ネット予約へ進む | ホットペッパーAPIの店舗URL + バリューコマース | 飲食予約 |
+| クーポンを見る | ホットペッパーAPIの店舗URL + バリューコマース | クーポン・空席確認 |
+| 近くの駐車場 | `PARKING_AFFILIATE_URL` | 駐車場予約 |
+| 近くのホテル | `HOTEL_AFFILIATE_URL` または楽天トラベルAPI | 宿泊予約 |
+| タクシー・移動 | `TAXI_AFFILIATE_URL` | 移動系 |
+| 美容予約 | `BEAUTY_AFFILIATE_URL` | 美容サロン予約 |
+
+設定例:
+
+```js
+PARKING_AFFILIATE_URL: "https://example.com/parking?area={city}&keyword={name}",
+TAXI_AFFILIATE_URL: "https://example.com/taxi?area={city}",
+BEAUTY_AFFILIATE_URL: "https://example.com/beauty?area={city}&keyword={category}",
+```
+
+`VALUECOMMERCE_URL_TEMPLATE` を使う場合は、最終遷移先を `{url}` に入れてラップします。
+
+```js
+VALUECOMMERCE_URL_TEMPLATE: "https://example.com/track?u={url}"
+```
+
 ## 楽天トラベルAPI
 
 ホテル予約は楽天トラベルキーワード検索APIに対応しています。

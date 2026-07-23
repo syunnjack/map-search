@@ -416,6 +416,8 @@ function renderRegionControls() {
   document.querySelectorAll("[data-municipality-examples]").forEach((node) => {
     node.textContent = examples;
   });
+  renderDefaultRevenueRail();
+  renderQuickLinks();
 }
 
 function isHotpepperCategory(category) {
@@ -456,6 +458,11 @@ function mapSearchLink(query, place) {
     return `https://www.google.com/maps/search/${encodeURIComponent(query)}/@${place.lat},${place.lng},15z`;
   }
   return `https://www.google.com/maps/search/${encodeURIComponent(query)}`;
+}
+
+function regionSearchLink(keyword, useMap = false) {
+  const query = `${currentRegion().name} ${keyword}`;
+  return useMap ? mapSearchLink(query) : searchLink(query);
 }
 
 function parkingUrl(place) {
@@ -516,6 +523,48 @@ function taxiUrl(place) {
 
 function beautyUrl(place) {
   return partnerUrl("BEAUTY_AFFILIATE_URL", searchLink(`${place.city} 美容 サロン 予約`), place);
+}
+
+function renderDefaultRevenueRail() {
+  const box = document.querySelector("[data-revenue-rail]");
+  if (!box) return;
+  const regionName = currentRegion().name;
+  box.innerHTML = `
+    <a class="rail-card primary" href="#map-service">
+      <strong>飲食店を予約</strong>
+      <span>${regionName}のエリアとジャンルを選んで探す</span>
+    </a>
+    <a class="rail-card" href="${regionSearchLink("飲食店 クーポン")}" target="_blank" rel="noopener">
+      <strong>クーポンを探す</strong>
+      <span>来店前に特典を確認</span>
+    </a>
+    <a class="rail-card" href="${regionSearchLink("駐車場", true)}" target="_blank" rel="noopener">
+      <strong>近くの駐車場</strong>
+      <span>車で行く前に場所を確認</span>
+    </a>
+    <a class="rail-card" href="${regionSearchLink("ホテル 予約")}" target="_blank" rel="noopener">
+      <strong>近くのホテル</strong>
+      <span>遠方からの利用に</span>
+    </a>
+    <a class="rail-card" href="${regionSearchLink("タクシー 配車")}" target="_blank" rel="noopener">
+      <strong>タクシー・移動</strong>
+      <span>飲酒後や雨の日の移動に</span>
+    </a>
+    <a class="rail-card" href="${regionSearchLink("美容サロン 予約")}" target="_blank" rel="noopener">
+      <strong>美容予約</strong>
+      <span>お出かけ前後の予約に</span>
+    </a>
+  `;
+}
+
+function renderQuickLinks() {
+  const box = document.querySelector("[data-quick-links]");
+  if (!box) return;
+  box.innerHTML = [
+    ["ガソリンスタンド", regionSearchLink("ガソリンスタンド", true)],
+    ["コンビニ", regionSearchLink("コンビニ", true)],
+    ["駅", regionSearchLink("駅", true)],
+  ].map(([label, url]) => `<a href="${url}" target="_blank" rel="noopener">${label}</a>`).join("");
 }
 
 function categoryColor(category) {
