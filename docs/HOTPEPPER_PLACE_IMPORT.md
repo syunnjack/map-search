@@ -40,6 +40,39 @@ node scripts/import-hotpepper-places.js `
 npm run build
 ```
 
+## 静岡県をまとめて取り込む
+
+静岡県の登録市町村と主要ジャンルをまとめて取り込む場合:
+
+```powershell
+$env:HOTPEPPER_API_KEY="リクルートAPIキー"
+$env:VALUECOMMERCE_URL_TEMPLATE="バリューコマースのURLテンプレート"
+
+npm run import:hotpepper:batch -- `
+  --prefecture shizuoka `
+  --genres izakaya,cafe_food,yakiniku `
+  --count 20
+
+npm run build
+npm run report:places
+```
+
+対象だけ確認したい場合は `--dry-run` を付けます。
+
+```powershell
+npm run import:hotpepper:batch -- --prefecture shizuoka --dry-run
+```
+
+市町村を絞る場合:
+
+```powershell
+npm run import:hotpepper:batch -- `
+  --prefecture shizuoka `
+  --cities 静岡市,浜松市,沼津市 `
+  --genres izakaya,cafe_food,yakiniku `
+  --count 20
+```
+
 `VALUECOMMERCE_URL_TEMPLATE` は任意です。設定すると、ホットペッパーの店舗URLを `{url}` に入れてラップします。
 
 ```powershell

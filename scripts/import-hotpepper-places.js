@@ -37,6 +37,7 @@ Options:
   --genre       Site genre ID such as izakaya, cafe_food, yakiniku
   --count       API fetch count, default 20
   --out         Output JSON path, default data/places/hotpepper-generated.json
+  --dry-run     Show import count without writing files
 `);
 }
 
@@ -179,6 +180,11 @@ async function main() {
   const incoming = shops
     .map((shop) => shopToPlace(shop, context))
     .filter((place) => place.name && Number.isFinite(place.lat) && Number.isFinite(place.lng));
+  if (args["dry-run"]) {
+    console.log(`Ready to import ${incoming.length} Hot Pepper places for ${prefecture.name} ${city} ${genre.label}`);
+    return;
+  }
+
   const existing = fs.existsSync(output) ? JSON.parse(fs.readFileSync(output, "utf8")) : [];
   const merged = mergePlaces(Array.isArray(existing) ? existing : [existing], incoming);
 
@@ -187,7 +193,23 @@ async function main() {
   console.log(`Imported ${incoming.length} Hot Pepper places into ${path.relative(root, output)}`);
 }
 
-main().catch((error) => {
-  console.error(error.message);
-  process.exit(1);
-});
+if (require.main === module) {
+  main().catch((error) => {
+    console.error(error.message);
+    process.exit(1);
+  });
+}
+
+module.exports = {
+  affiliateUrl,
+  ensureCity,
+  ensureGenre,
+  ensurePrefecture,
+  fetchHotpepperShops,
+  hotpepperGenreCode,
+  mergePlaces,
+  parseArgs,
+  readShopsFromPayload,
+  shopToPlace,
+  slugify,
+};
