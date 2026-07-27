@@ -79,6 +79,12 @@ function renderPlacePage(place) {
   const prefecture = prefectureLabel(place.prefecture);
   const genre = genreLabel(place.genre);
   const tags = (place.tags || []).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
+  const image = place.image ? `<img class="place-detail-image" src="${escapeHtml(place.image)}" alt="${escapeHtml(place.name)}の写真" loading="lazy" />` : "";
+  const extraRows = [
+    place.access ? `<p><strong>アクセス</strong><br>${escapeHtml(place.access)}</p>` : "",
+    place.open ? `<p><strong>営業時間</strong><br>${escapeHtml(place.open)}</p>` : "",
+    place.close ? `<p><strong>定休日</strong><br>${escapeHtml(place.close)}</p>` : "",
+  ].filter(Boolean).join("");
   const title = `${place.name}の予約・行き方・周辺情報 | map-search`;
   const description = `${prefecture}${place.municipality}の${place.name}について、予約、現在地からの道案内、周辺ホテルや駐車場をまとめて確認できます。`;
   const reserveTarget = place.reservationUrl && place.reservationUrl.startsWith("#") ? "_self" : "_blank";
@@ -113,6 +119,7 @@ function renderPlacePage(place) {
         <h1>${escapeHtml(place.name)}</h1>
         <p class="lead">${escapeHtml(place.description || description)}</p>
         <div class="tag-row">${tags}</div>
+        ${image}
       </section>
       <section class="content-section split-section">
         <div>
@@ -122,6 +129,7 @@ function renderPlacePage(place) {
             <p><strong>住所</strong><br>${escapeHtml(place.address || `${prefecture}${place.municipality}`)}</p>
             <p><strong>評価</strong><br>★${escapeHtml(place.rating || "-")}</p>
             <p><strong>目安</strong><br>${escapeHtml(place.price || "現地情報を確認")}</p>
+            ${extraRows}
           </div>
           <div class="modal-actions">
             <a class="button primary" href="${escapeHtml(place.reservationUrl || place.sourceUrl || "#")}" target="${reserveTarget}" rel="noopener" data-track="reservation_click" data-place-id="${escapeHtml(place.id)}" data-category="${escapeHtml(place.genre)}">予約情報を見る</a>
@@ -165,6 +173,18 @@ function updateSitemap(places) {
   fs.writeFileSync(sitemapPath, sitemap, "utf8");
 }
 
+function writePlaceIndex(places) {
+  const entries = {};
+  places.forEach((place) => {
+    const detailUrl = `./place/${place.id}/`;
+    entries[place.id] = detailUrl;
+    if (place.placeId) entries[place.placeId] = detailUrl;
+    if (place.provider && place.placeId) entries[`${place.provider}-${place.placeId}`] = detailUrl;
+  });
+  const content = `window.MAP_SEARCH_PLACE_INDEX = ${JSON.stringify(entries, null, 2)};\n`;
+  fs.writeFileSync(path.join(root, "place-index.js"), content, "utf8");
+}
+
 const places = readPlaces();
 places.forEach((place) => {
   const outputPath = path.join(root, "place", place.id, "index.html");
@@ -172,5 +192,6 @@ places.forEach((place) => {
   fs.writeFileSync(outputPath, renderPlacePage(place), "utf8");
 });
 updateSitemap(places);
+writePlaceIndex(places);
 
-console.log(`Generated ${places.length} place pages`);
+console.log(`Generated ${places.length} place pages and place-index.js`);

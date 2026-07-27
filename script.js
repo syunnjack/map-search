@@ -1,4 +1,5 @@
 const config = window.MAP_SEARCH_CONFIG || {};
+const placeIndex = window.MAP_SEARCH_PLACE_INDEX || {};
 
 const regions = {
   shizuoka: {
@@ -527,6 +528,13 @@ function affiliateUrl(url) {
   return url;
 }
 
+function indexedPlaceDetailUrl(...keys) {
+  for (const key of keys) {
+    if (key && placeIndex[key]) return placeIndex[key];
+  }
+  return "";
+}
+
 function replacePartnerTokens(template, place) {
   if (!template || !place) return template || "";
   return template
@@ -872,6 +880,7 @@ function shopToPlace(shop) {
     description: shop.catch || shop.genre?.catch || shop.access || "ホットペッパー掲載店です。",
     offer: shop.ktai_coupon === "0" || shop.coupon_urls?.pc ? "クーポンあり" : "予約ページあり",
     reserveUrl: affiliateUrl(shopUrl),
+    detailUrl: indexedPlaceDetailUrl(`hotpepper-${shop.id}`, shop.id),
     siteUrl: affiliateUrl(shopUrl),
     image: photo,
     access: shop.access,
@@ -900,6 +909,7 @@ function googlePlaceToPlace(place) {
     description: place.formattedAddress || "Google Places APIから取得した施設情報です。",
     offer: "公式情報を確認",
     reserveUrl: mapsUrl,
+    detailUrl: indexedPlaceDetailUrl(`google_places-${place.id}`, `google-${place.id}`, place.id),
     siteUrl: mapsUrl,
     source: "google_places",
   };
