@@ -25,7 +25,9 @@ module.exports = async function handler(request, response) {
     params.set("affiliateId", process.env.RAKUTEN_AFFILIATE_ID);
   }
 
-  const upstream = await fetch(`https://openapi.rakuten.co.jp/engine/api/Travel/KeywordHotelSearch/${RAKUTEN_TRAVEL_VERSION}?${params.toString()}`);
+  const upstream = await fetch(`https://openapi.rakuten.co.jp/engine/api/Travel/KeywordHotelSearch/${RAKUTEN_TRAVEL_VERSION}?${params.toString()}`, {
+    headers: { Origin: process.env.RAKUTEN_ALLOWED_ORIGIN || "https://onsen-search.jp" },
+  });
   const body = await upstream.text();
   response
     .status(upstream.status)
