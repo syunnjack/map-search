@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { analyticsHead } = require("./analytics-head");
 
 const root = path.resolve(__dirname, "..");
 const regions = JSON.parse(fs.readFileSync(path.join(root, "data", "region-schema.json"), "utf8"));
@@ -35,6 +36,7 @@ function layout({ title, description, canonicalPath, label, h1, lead, body, json
     <link rel="canonical" href="${siteUrl}${canonicalPath}" />
     <link rel="stylesheet" href="${prefix}styles.css" />
     <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
+${analyticsHead()}
   </head>
   <body>
     <header class="header">
