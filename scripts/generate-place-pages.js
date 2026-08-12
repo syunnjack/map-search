@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { analyticsHead } = require("./analytics-head");
 
 const root = path.resolve(__dirname, "..");
 const siteUrl = "https://map-search.example";
@@ -102,6 +103,7 @@ function renderPlacePage(place) {
     <script src="../../analytics.js"></script>
     <script src="../../place-detail.js" defer></script>
     <script type="application/ld+json">${JSON.stringify(jsonLd(place))}</script>
+${analyticsHead()}
   </head>
   <body>
     <header class="header">
